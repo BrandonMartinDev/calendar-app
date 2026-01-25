@@ -1,0 +1,35 @@
+name: DEV_calendar-app
+
+services:
+
+
+  database:
+    image: mongo
+    env_file: ./database/.env
+    networks:
+      - calendar-network
+    volumes:
+      - ./database/db:/data/db
+
+
+  server:
+    restart: unless-stopped
+    env_file: ./server/.env
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    networks:
+      - calendar-network
+    ports:
+      - 3000:3000
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      - database
+
+
+
+networks:
+  calendar-network:
+    driver: bridge

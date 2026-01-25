@@ -1,0 +1,20 @@
+FROM node:24-alpine AS build
+
+# Set work directory to /app inside docker container
+WORKDIR /app
+
+
+# Copy package.json and package-lock into work dir
+COPY package*.json ./
+
+
+# Install dependencies in container using package json
+RUN npm i
+
+
+# Once deps installed, copy everything else into work dir
+COPY . ./
+
+
+# Run dev script
+CMD [ "npm", "run", "dev" ]
