@@ -5,11 +5,11 @@ services:
 
   database:
     image: mongo
-    env_file: ./database/.env
+    env_file: ./server/.env
     networks:
       - calendar-network
     volumes:
-      - ./database/db:/data/db
+      - ./database:/data/db
 
 
   server:
