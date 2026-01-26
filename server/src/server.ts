@@ -27,8 +27,9 @@ import MainRouter from "@routers/main.router";
 
 // Utils
 
-import SendResponse from "api/utils/sendResponse.util";
-import HandleError from "api/utils/handleError.util";
+import SendResponse from "@utils/sendResponse.util";
+import HandleError from "@utils/handleError.util";
+import { ConnectToDB, DatabaseStatus, DB_STATUS } from "@database/MongoDB.database";
 
 
 
@@ -47,12 +48,43 @@ app.get("/", (req: Request, res: Response) => {
 
     try {
 
-        SendResponse(res, {
-            statusCode: 200,
-            responseJson: {
-                message: "Server is OK"
-            }
-        })
+        switch (DB_STATUS) {
+
+            case DatabaseStatus.ERROR:
+
+                SendResponse(res, {
+                    statusCode: 500,
+                    responseJson: {
+                        error: "Could not connect to database"
+                    }
+                });
+
+                break;
+
+            case DatabaseStatus.LOADING:
+
+                SendResponse(res, {
+                    statusCode: 200,
+                    responseJson: {
+                        message: "Connecting to database"
+                    }
+                });
+
+                break;
+
+            case DatabaseStatus.SUCCESSFULLY_CONNECTED:
+
+                SendResponse(res, {
+                    statusCode: 200,
+                    responseJson: {
+                        message: "Server is OK"
+                    }
+                });
+
+                break;
+
+
+        }
 
     } catch (error) {
         HandleError(res, { error: error });
@@ -86,9 +118,18 @@ const main = async () => {
 
     try {
 
+        // Start listening to requests
+
         app.listen(PORT, () => {
             console.warn("CALENDAR APP SERVER SUCCESSFULLY LISTENING ON PORT:", PORT);
         });
+
+
+        // Attempt to connect to database
+
+        console.log("CONNECTING TO DATABASE...");
+        await ConnectToDB();
+        console.log("CONNECTED TO DATABASE SUCCESSFULLY");
 
     } catch (error) {
         HandleError(undefined, { error: error });

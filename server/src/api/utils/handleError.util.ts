@@ -7,7 +7,7 @@ import { type Response } from 'express';
 
 // Utils
 
-import SendResponse from './sendResponse.util';
+import SendResponse from '@utils/sendResponse.util';
 
 
 // -- == [[ TYPES ]] == -- \\
