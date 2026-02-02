@@ -38,7 +38,7 @@ const HandleError = (res: (Response | undefined), errorOptions: ErrorOptions) =>
         // Else, just console warns the error
 
         if (error instanceof Error) {
-            console.warn(error.message);
+            console.warn("ERROR MESSAGE:", error.message);
         } else {
             console.warn(error);
         }
