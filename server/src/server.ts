@@ -17,6 +17,10 @@ import {
 import { PORT } from "@config/defaults.config";
 
 
+// Database
+import { ConnectToDB, DatabaseStatus, DB_STATUS } from "@database/MongoDB.database";
+
+
 // Express
 import express from "express";
 
@@ -29,7 +33,6 @@ import MainRouter from "@routers/main.router";
 
 import SendResponse from "@utils/sendResponse.util";
 import HandleError from "@utils/handleError.util";
-import { ConnectToDB, DatabaseStatus, DB_STATUS } from "@database/MongoDB.database";
 
 
 
