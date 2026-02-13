@@ -30,11 +30,15 @@ let DB_STATUS: DatabaseStatus = DatabaseStatus.LOADING;
 const ConnectToDB = async () => {
 
     try {
+        
+        console.log("CONNECTING TO DATABASE...");
 
         const connection = await mongoose.connect(MONGO_CONNECTION_STRING);
         if (!connection) throw new Error("Could not connect to database!");
 
         DB_STATUS = DatabaseStatus.SUCCESSFULLY_CONNECTED;
+        
+        console.log("CONNECTED TO DATABASE SUCCESSFULLY");
 
     } catch (error) {
         HandleError(undefined, { error: error });

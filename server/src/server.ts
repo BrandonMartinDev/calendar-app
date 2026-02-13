@@ -130,9 +130,7 @@ const main = async () => {
 
         // Attempt to connect to database
 
-        console.log("CONNECTING TO DATABASE...");
         await ConnectToDB();
-        console.log("CONNECTED TO DATABASE SUCCESSFULLY");
 
     } catch (error) {
         HandleError(undefined, { error: error });
