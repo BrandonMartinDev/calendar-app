@@ -2,11 +2,12 @@
 
 export type User = {
 
-    account_id: "FIXME";
+    _id?: string;
+
     created_on: Date;
     username: string;
     password: string;
-    created_tasks: "FIXME"[];
+    created_tasks: Task[];
 
 }
 
@@ -16,13 +17,14 @@ export type User = {
 
 export type Task = {
 
-    task_id: "FIXME";
-    creator_id: "FIXME";
+    _id?: string;
+
+    creator_id: User | string;
     created_on: Date;
 
     name: string;
     description?: string;
     task_date: Date;
-    completed: boolean | undefined;
+    completed: boolean;
 
 }

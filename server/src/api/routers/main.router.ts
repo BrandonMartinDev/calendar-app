@@ -16,8 +16,8 @@ import express from 'express';
 
 // Utils
 
-import HandleError from 'api/utils/handleError.util';
-import SendResponse from "api/utils/sendResponse.util";
+import HandleError from '@utils/handleError.util';
+import SendResponse from "@utils/sendResponse.util";
 
 
 
