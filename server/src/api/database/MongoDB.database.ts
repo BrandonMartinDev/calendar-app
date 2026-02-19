@@ -52,10 +52,10 @@ const ConnectToDB = async () => {
 // -- == [[ EXPORTS ]] == -- \\
 
 export {
-    
+
     ConnectToDB,
-    
+
     DatabaseStatus,
     DB_STATUS
-    
+
 }
