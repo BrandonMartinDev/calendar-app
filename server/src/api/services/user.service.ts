@@ -1,0 +1,92 @@
+// -- == [[ IMPORTS ]] == -- \\
+
+// Types
+import { type User } from "@shared/types/main";
+
+
+// Schemas
+import { UserModel } from "@schemas/User.schema";
+
+
+// Utils
+import HandleError from "@utils/handleError.util"
+import { HashText } from "@utils/hash.util";
+
+
+
+// -- == [[ METHODS ]] == -- \\
+
+// Get/find
+
+const GetUserByUsername = async (username: string) => {
+
+    try {
+
+        // Ensure username was provided
+
+        if (!username) throw new Error("Username was not provided");
+
+
+        // Find user in database and return it
+
+        const user = await UserModel.findOne({ username: username });
+        return user;
+
+    } catch (error) {
+        HandleError(undefined, { error: error });
+    }
+
+}
+
+
+// Create
+
+const CreateNewUser = async (username: string, plaintextPassword: string) => {
+
+    try {
+
+        // Ensure username/plaintextPassword were provided
+
+        if (!username) throw new Error("username was not provided");
+        if (!plaintextPassword) throw new Error("plaintextPassword was not provided");
+
+
+        // Hash plaintext password
+
+        const hashedPassword = await HashText(plaintextPassword);
+        if (!hashedPassword) throw new Error("Could not hash password");
+
+
+        // Create new user with username and hashed password
+
+        const newUser = await UserModel.create({
+            username: username,
+            password: hashedPassword
+        });
+
+
+        // Save newUser to db and return newUser
+
+        await newUser.save();
+        return newUser;
+
+    } catch (error) {
+        HandleError(undefined, { error: error });
+    }
+
+}
+
+
+
+// -- == [[ EXPORTS ]] == -- \\
+
+export {
+
+    // Get/find
+    GetUserByUsername,
+
+
+    // Create
+    CreateNewUser
+
+}

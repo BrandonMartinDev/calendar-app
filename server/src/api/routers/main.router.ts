@@ -20,6 +20,11 @@ import HandleError from '@utils/handleError.util';
 import SendResponse from "@utils/sendResponse.util";
 
 
+// Routers
+
+import SignupRouter from "@routers/signup.router";
+
+
 
 // -- == [[ INITIALIZE MAIN ROUTER ]] == -- \\
 
@@ -29,6 +34,7 @@ const MainRouter = express.Router();
 
 // -- == [[ ROUTE ENDPOINTS TO ROUTERS ]] == -- \\
 
+MainRouter.use("/signup", SignupRouter);
 
 
 
@@ -50,6 +56,7 @@ MainRouter.get("/", (req: Request, res: Response, next: NextFunction) => {
     }
 
 });
+
 
 
 // -- == [[ EXPORTS ]] == -- \\

@@ -14,7 +14,7 @@ import {
 
 
 // Config
-import { PORT } from "@config/defaults.config";
+import { EXPRESS_SESSION_OPTIONS, PORT } from "@config/defaults.config";
 
 
 // Database
@@ -23,6 +23,7 @@ import { ConnectToDB, DatabaseStatus, DB_STATUS } from "@database/MongoDB.databa
 
 // Express
 import express from "express";
+import session from "express-session";
 
 
 // Routers
@@ -40,7 +41,8 @@ import HandleError from "@utils/handleError.util";
 
 const app = express();
 
-
+app.use(express.json());
+app.use(session(EXPRESS_SESSION_OPTIONS));
 app.use("/api/v1", MainRouter);
 
 
