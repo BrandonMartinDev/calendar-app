@@ -9,7 +9,7 @@ import { ValidateUserIsLoggedOut } from '@validators/auth.validator';
 
 
 // Controllers
-import { SignupUser } from 'api/controllers/signup.controller';
+import { SignupUser } from '@controllers/signup.controller';
 
 
 

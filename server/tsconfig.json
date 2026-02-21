@@ -45,6 +45,9 @@
       "@validators/*": [
         "api/validators/*"
       ],
+      "@controllers/*": [
+        "api/controllers/*"
+      ],
       "@services/*": [
         "api/services/*"
       ],

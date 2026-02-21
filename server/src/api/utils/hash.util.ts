@@ -30,10 +30,26 @@ const HashText = async (plaintext: string) => {
 
 }
 
+const CompareHashes = async (plaintext: string, hashedString: string) => {
+
+    try {
+
+        if (!plaintext) throw new Error("plaintext was not provided");
+        if (!hashedString) throw new Error("hashedString was not provided");
+
+        return await bcrypt.compare(plaintext, hashedString);
+
+    } catch (error) {
+        HandleError(undefined, { error: error });
+    }
+
+}
+
 
 
 // -- == [[ EXPORTS ]] == -- \\
 
 export {
-    HashText
+    HashText,
+    CompareHashes
 }

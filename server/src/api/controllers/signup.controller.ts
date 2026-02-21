@@ -26,9 +26,22 @@ const SignupUser = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
 
-        // Gets username and password from request body
+        // Makes sure username and password from request body exist
 
         const { username, password } = req.body;
+        
+        if (!username || !password) {
+
+            SendResponse(res, {
+                statusCode: 400,
+                responseJson: {
+                    error: "Invalid request"
+                }
+            })
+
+            return;
+
+        }
 
 
         // Checks if user already exists
