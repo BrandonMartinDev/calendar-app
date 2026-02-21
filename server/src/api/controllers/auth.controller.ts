@@ -13,8 +13,9 @@ import {
 
 import HandleError from "@utils/handleError.util";
 import SendResponse from "@utils/sendResponse.util";
-import { GetUserByUsername } from "@services/user.service";
+import { GetUserByID, GetUserByUsername } from "@services/user.service";
 import { CompareHashes, HashText } from "@utils/hash.util";
+import { SanitizeUser } from "@utils/sanitize.util";
 
 
 
@@ -112,11 +113,44 @@ const LogoutUser = async (req: Request, res: Response, next: NextFunction) => {
 
 }
 
+const GetLoggedInUser = async (req: Request, res: Response, next: NextFunction) => {
+
+    try {
+
+        // Gets loggedInUserID from request session
+
+        const loggedInUserID = req.session.loggedInUserID;
+        if (!loggedInUserID) throw new Error("Could not get loggedInUserID from request session");
+
+
+        // Gets user info from loggedInUserID, sanitizes, and returns it
+
+        const user = await GetUserByID(loggedInUserID);
+        if (!user) throw new Error("Could not get userinfo from loggedInUserID");
+
+        const sanitizedUser = SanitizeUser(user);
+
+
+        SendResponse(res, {
+            statusCode: 200,
+            responseJson: {
+                message: (`Successfully got logged in user info`),
+                data: sanitizedUser
+            }
+        });
+
+    } catch (error) {
+        HandleError(res, { error: error });
+    }
+
+}
+
 
 
 // -- == [[ EXPORTS ]] == -- \\
 
 export {
     LoginUser,
-    LogoutUser
+    LogoutUser,
+    GetLoggedInUser
 }

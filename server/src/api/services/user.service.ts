@@ -1,7 +1,8 @@
 // -- == [[ IMPORTS ]] == -- \\
 
-// Types
-import { type User } from "@shared/types/main";
+
+// Packages
+import mongoose from "mongoose";
 
 
 // Schemas
@@ -18,7 +19,7 @@ import { HashText } from "@utils/hash.util";
 
 // Get/find
 
-const GetUserByUsername = async (username: string) => {
+const GetUserByUsername = async (username: string, populate: boolean = false) => {
 
     try {
 
@@ -29,7 +30,27 @@ const GetUserByUsername = async (username: string) => {
 
         // Find user in database and return it
 
-        const user = await UserModel.findOne({ username: username });
+        const user = await UserModel.findOne().where("username").equals(username);
+        return user;
+
+    } catch (error) {
+        HandleError(undefined, { error: error });
+    }
+
+}
+
+const GetUserByID = async (userID: (string | mongoose.Types.ObjectId), populate: boolean = false) => {
+
+    try {
+
+        // Ensure userID was provided
+
+        if (!userID) throw new Error("userID was not provided");
+
+
+        // Find user in database and return it
+
+        const user = await UserModel.findOne().where("_id").equals(userID);
         return user;
 
     } catch (error) {
@@ -84,6 +105,7 @@ export {
 
     // Get/find
     GetUserByUsername,
+    GetUserByID,
 
 
     // Create

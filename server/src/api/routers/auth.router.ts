@@ -11,7 +11,12 @@ import { ValidateUserIsLoggedIn, ValidateUserIsLoggedOut } from '@validators/aut
 
 
 // Controllers
-import { LoginUser, LogoutUser } from '@controllers/auth.controller';
+
+import {
+    GetLoggedInUser,
+    LoginUser,
+    LogoutUser
+} from '@controllers/auth.controller';
 
 
 
@@ -25,7 +30,8 @@ const AuthRouter = express.Router();
 
 AuthRouter.route("/")
     .post(ValidateRequestBodyExists, ValidateUserIsLoggedOut, LoginUser)
-    .delete(ValidateUserIsLoggedIn, LogoutUser);
+    .delete(ValidateUserIsLoggedIn, LogoutUser)
+    .get(ValidateUserIsLoggedIn, GetLoggedInUser);
 
 
 
