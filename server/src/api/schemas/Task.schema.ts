@@ -15,16 +15,24 @@ import { Schema, SchemaTypes, model } from "mongoose";
 
 const TaskSchema = new Schema<Task>({
 
+    // When task was created in db
+
     created_on: {
         type: Date,
         default: () => Date.now(),
         required: true
     },
 
+
+    // What user created task
+
     creator_id: {
         type: SchemaTypes.ObjectId,
         ref: "User"
     },
+
+
+    // Name of task
 
     name: {
 
@@ -39,6 +47,9 @@ const TaskSchema = new Schema<Task>({
 
     },
 
+
+    // Description of task
+
     description: {
 
         type: String,
@@ -52,11 +63,18 @@ const TaskSchema = new Schema<Task>({
 
     },
 
+
+    // Date user set for task
+
     task_date: {
         type: Date,
         default: () => Date.now(),
         required: true
     },
+
+
+
+    // Whether task has been marked completed by user
 
     completed: {
 

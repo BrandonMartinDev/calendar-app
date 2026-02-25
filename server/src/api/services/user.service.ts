@@ -1,5 +1,8 @@
 // -- == [[ IMPORTS ]] == -- \\
 
+// Shared
+import { User } from "@shared/types/main";
+
 
 // Packages
 import mongoose from "mongoose";
@@ -19,7 +22,7 @@ import { HashText } from "@utils/hash.util";
 
 // Get/find
 
-const GetUserByUsername = async (username: string, populate: boolean = false) => {
+const GetUserByUsername = async (username: string, populateTasks: boolean = false) => {
 
     try {
 
@@ -30,7 +33,14 @@ const GetUserByUsername = async (username: string, populate: boolean = false) =>
 
         // Find user in database and return it
 
-        const user = await UserModel.findOne().where("username").equals(username);
+        let user: User | null;
+
+        if (populateTasks === true) {
+            user = await UserModel.findOne().where("username").equals(username).populate("created_tasks");
+        } else {
+            user = await UserModel.findOne().where("username").equals(username);
+        }
+
         return user;
 
     } catch (error) {
@@ -39,7 +49,7 @@ const GetUserByUsername = async (username: string, populate: boolean = false) =>
 
 }
 
-const GetUserByID = async (userID: (string | mongoose.Types.ObjectId), populate: boolean = false) => {
+const GetUserByID = async (userID: (string | mongoose.Types.ObjectId), populateTasks: boolean = false) => {
 
     try {
 
@@ -50,7 +60,14 @@ const GetUserByID = async (userID: (string | mongoose.Types.ObjectId), populate:
 
         // Find user in database and return it
 
-        const user = await UserModel.findOne().where("_id").equals(userID);
+        let user;
+
+        if (populateTasks === true) {
+            user = await UserModel.findOne().where("_id").equals(userID).populate("created_tasks");
+        } else {
+            user = await UserModel.findOne().where("_id").equals(userID);
+        }
+
         return user;
 
     } catch (error) {

@@ -7,7 +7,7 @@ export type User = {
     created_on: Date;
     username: string;
     password: string;
-    created_tasks: Task[];
+    created_tasks: (Task | string)[];
 
 }
 

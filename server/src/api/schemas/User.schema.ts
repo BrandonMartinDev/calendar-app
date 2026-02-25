@@ -7,12 +7,7 @@ import { User } from "@shared/types/main";
 
 // Packages
 
-import { Schema, model } from "mongoose";
-
-
-// Schemas
-
-import { TaskSchema } from "@schemas/Task.schema";
+import { Schema, SchemaTypes, model } from "mongoose";
 
 
 
@@ -51,7 +46,7 @@ const UserSchema = new Schema<User>({
     },
 
     created_tasks: {
-        type: [TaskSchema],
+        type: [SchemaTypes.ObjectId],
         ref: "Task"
     }
 
