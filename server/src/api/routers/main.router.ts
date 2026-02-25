@@ -24,6 +24,7 @@ import SendResponse from "@utils/sendResponse.util";
 
 import SignupRouter from "@routers/signup.router";
 import AuthRouter from "@routers/auth.router";
+import TaskRouter from "@routers/tasks.router";
 
 
 
@@ -37,6 +38,7 @@ const MainRouter = express.Router();
 
 MainRouter.use("/signup", SignupRouter);
 MainRouter.use("/auth", AuthRouter);
+MainRouter.use("/tasks", TaskRouter);
 
 
 
