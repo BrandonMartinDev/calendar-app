@@ -21,7 +21,7 @@ import { SanitizeTask, SanitizeTasks } from "@utils/sanitize.util";
 // Services
 
 import { GetUserByID } from "@services/user.service";
-import { CreateNewUserTask } from "@services/tasks.service";
+import { CreateNewUserTask, DeleteSpecificTask, GetSpecificTaskInfo } from "@services/tasks.service";
 
 
 
@@ -44,11 +44,28 @@ const RejectTaskAction = async (res: Response) => {
 
 }
 
+const RejectMissingTask = async (res: Response) => {
+
+    try {
+
+        SendResponse(res, {
+            statusCode: 404,
+            responseJson: {
+                error: "Task info does not exist"
+            }
+        });
+
+    } catch (error) {
+        HandleError(res, { error: error });
+    }
+
+}
+
 
 
 // Get
 
-const GetUserTasks = async (req: Request, res: Response, next: NextFunction) => {
+const GetUserTasksController = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
 
@@ -81,10 +98,70 @@ const GetUserTasks = async (req: Request, res: Response, next: NextFunction) => 
 
 }
 
+const GetSpecificTaskInfoController = async (req: Request, res: Response, next: NextFunction) => {
+
+    try {
+
+        // Get user info from logged in user id
+
+        const loggedInUserID = req.session.loggedInUserID;
+        if (!loggedInUserID) throw new Error("Could not get loggedInUserID");
+
+        const user = await GetUserByID(loggedInUserID, true);
+        if (!user) throw new Error("Could not get user from loggedInUserID");
+
+
+        // Get task info from params
+
+        const { task_id } = req.params;
+        if (!task_id) throw new Error("Could not get task_id from params");
+
+        const task = await GetSpecificTaskInfo(task_id.toString());
+
+        if (!task) {
+            RejectMissingTask(res);
+            return;
+        }
+
+
+        // Checks if logged in user owns task
+
+        if (task.creator_id.toString() !== user._id.toString()) {
+
+            SendResponse(res, {
+                statusCode: 401,
+                responseJson: {
+                    error: "Unauthorized"
+                }
+            });
+
+            return;
+
+        }
+
+
+        // Sanitize task and return it
+
+        const sanitizedTask = SanitizeTask(task);
+
+        SendResponse(res, {
+            statusCode: 200,
+            responseJson: {
+                message: (`Successfully got task '${task_id}'`),
+                data: sanitizedTask
+            }
+        });
+
+    } catch (error) {
+        HandleError(res, { error: error });
+    }
+
+}
+
 
 // Create
 
-const CreateNewTask = async (req: Request, res: Response, next: NextFunction) => {
+const CreateNewTaskController = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
 
@@ -146,15 +223,81 @@ const CreateNewTask = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 
+// Delete
+
+const DeleteTaskController = async (req: Request, res: Response, next: NextFunction) => {
+
+    try {
+
+        // Get user info from logged in user id
+
+        const loggedInUserID = req.session.loggedInUserID;
+        if (!loggedInUserID) throw new Error("Could not get loggedInUserID");
+
+        const user = await GetUserByID(loggedInUserID, true);
+        if (!user) throw new Error("Could not get user from loggedInUserID");
+
+
+        // Get task info from params
+
+        const { task_id } = req.params;
+        if (!task_id) throw new Error("Could not get task_id from params");
+
+        const task = await GetSpecificTaskInfo(task_id.toString());
+        
+        if (!task) {
+            RejectMissingTask(res);
+            return;
+        }
+
+
+        // Ensures logged in user owns task
+
+        if (task.creator_id.toString() !== user._id.toString()) {
+
+            SendResponse(res, {
+                statusCode: 401,
+                responseJson: {
+                    error: "Unauthorized"
+                }
+            });
+
+            return;
+
+        }
+
+
+        // Delete task from db and user
+
+        await DeleteSpecificTask(task_id.toString());
+
+        SendResponse(res, {
+            statusCode: 200,
+            responseJson: {
+                message: `Successfully deleted task (${task_id.toString()})`
+            }
+        });
+
+    } catch (error) {
+        HandleError(res, { error: error });
+    }
+
+}
+
+
 
 // -- == [[ EXPORTS ]] == -- \\
 
 export {
 
     // Get
-    GetUserTasks,
+    GetUserTasksController,
+    GetSpecificTaskInfoController,
 
     // Create
-    CreateNewTask
+    CreateNewTaskController,
+
+    // Delete
+    DeleteTaskController,
 
 }

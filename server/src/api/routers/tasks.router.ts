@@ -11,7 +11,17 @@ import { ValidateRequestBodyExists } from "@validators/request.validator";
 
 
 // Controllers
-import { CreateNewTask, GetUserTasks } from "@controllers/tasks.controller";
+
+import {
+
+    GetUserTasksController,
+    GetSpecificTaskInfoController,
+
+    CreateNewTaskController,
+
+    DeleteTaskController,
+
+} from "@controllers/tasks.controller";
 
 
 
@@ -23,14 +33,14 @@ const TaskRouter = express.Router();
 
 // -- == [[ ROUTE ENDPOINTS ]] == -- \\
 
-// TaskRouter.route("/:task_id")
-//     .get(ValidateUserIsLoggedIn)
-//     .put(ValidateUserIsLoggedIn)
-//     .delete(ValidateUserIsLoggedIn);
+TaskRouter.route("/:task_id")
+    .get(ValidateUserIsLoggedIn, GetSpecificTaskInfoController)
+    .delete(ValidateUserIsLoggedIn, DeleteTaskController)
+    //     .put(ValidateUserIsLoggedIn);
 
 TaskRouter.route("/")
-    .get(ValidateUserIsLoggedIn, GetUserTasks)
-    .post(ValidateRequestBodyExists, ValidateUserIsLoggedIn, CreateNewTask);
+    .get(ValidateUserIsLoggedIn, GetUserTasksController)
+    .post(ValidateRequestBodyExists, ValidateUserIsLoggedIn, CreateNewTaskController);
 
 
 

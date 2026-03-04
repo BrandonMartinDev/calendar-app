@@ -43,6 +43,8 @@ const SanitizeUser = (user: User) => {
 
 // Tasks
 
+type SanitizedTask = Omit<Task, ("__v" | "created_on")>;
+
 const SanitizeTask = (task: Task) => {
 
     try {
@@ -51,7 +53,7 @@ const SanitizeTask = (task: Task) => {
          * No sanitization method yet since tasks don't need to be sanitized atm
          */
 
-        const sanitizedTask: Omit<Task, ("__v" | "created_on")> = {
+        const sanitizedTask: SanitizedTask = {
 
             _id: task._id,
             creator_id: task.creator_id,
@@ -75,7 +77,7 @@ const SanitizeTasks = (tasks: (Task | string)[]) => {
 
     try {
 
-        let sanitizedTasks: (Task | string)[] = [];
+        let sanitizedTasks: (SanitizedTask | string)[] = [];
 
         tasks.forEach((unsanitizedTask) => {
 
@@ -84,21 +86,10 @@ const SanitizeTasks = (tasks: (Task | string)[]) => {
                 return;
             }
 
-            const newTask: Task = {
+            const sanitizedTask = SanitizeTask(unsanitizedTask);
+            if (!sanitizedTask) throw new Error("Could not get sanitized task");
 
-                _id: unsanitizedTask._id,
-
-                creator_id: unsanitizedTask.creator_id,
-                created_on: unsanitizedTask.created_on,
-
-                name: unsanitizedTask.name,
-                description: unsanitizedTask.description,
-                task_date: unsanitizedTask.task_date,
-                completed: unsanitizedTask.completed,
-
-            }
-
-            sanitizedTasks.push(newTask);
+            sanitizedTasks.push(sanitizedTask);
 
         });
 
