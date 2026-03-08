@@ -29,6 +29,21 @@ services:
     depends_on:
       - database
 
+    
+  client:
+    restart: unless-stopped
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    networks:
+      - calendar-network
+    ports: 
+      - 5173:5173
+    volumes:
+      - ./client:/app
+      - ./client/node_modules:/app/node_modules
+    depends_on:
+      - server
 
 
 networks:
