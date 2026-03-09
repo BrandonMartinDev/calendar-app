@@ -1,0 +1,92 @@
+/* IMPORTS */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+
+
+/* GLOBAL VARIABLES */
+
+:root {
+
+    /* COLORS */
+
+    --red-500: #b62525;
+    
+    --blue-500: #2e73cc;
+    --blue-700: #1f57a0;
+
+    --light-gray-100: #ececec;
+    --light-gray-300: #d6d6d6;
+
+    --gray-300: #494949;
+    --gray-500: #303030;
+    --gray-700: #1a1a1a;
+    --gray-900: #0f0f0f;
+
+
+    /* FONTS */
+
+    --ff-poppins: "Poppins";
+    --ff-rubik: "Rubik";
+
+}
+
+
+/* CSS RESET */
+
+* {
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: none;
+    text-decoration: none;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+
+    scrollbar-width: thin;
+    scrollbar-color: gray transparent;
+
+    outline: none;
+
+    font-family: var(--ff-rubik);
+
+}
+
+html,
+body,
+#root {
+    height: 100%;
+    height: 100%;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+
+    font-family: var(--rubik);
+    font-weight: 300;
+    font-size: 1.6rem;
+
+}
+
+img {
+    max-width: 100%;
+}
+
+
+
+/* GLOBAL STYLES */
+
+.container {
+
+    max-width: 90em;
+    width: 80%;
+    margin: 0 auto;
+
+}
+
+.page-wrapper {
+    height: 100%;
+}

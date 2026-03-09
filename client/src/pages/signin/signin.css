@@ -1,0 +1,131 @@
+/* MAIN */
+
+.page-wrapper.signin {
+    display: grid;
+    place-items: center;
+}
+
+.signin main {
+
+    padding: 2.5rem;
+    max-width: 33rem;
+    width: 100%;
+
+    border-radius: 8px;
+    border: 1px solid var(--light-gray-300);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, .1);
+
+}
+
+.signin main h2 {
+
+    font-size: 3rem;
+    font-family: var(--ff-poppins);
+    font-weight: 900;
+
+}
+
+
+
+
+
+/* FORM */
+
+.signin form {
+
+    display: flex;
+    flex-direction: column;
+
+    font-size: 1.2rem;
+
+}
+
+
+/* FORM INPUTS */
+
+.signin .inputs {
+
+    --margin: 2rem;
+
+    margin-top: var(--margin);
+    margin-bottom: var(--margin);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+
+}
+
+.signin .input-box {
+    gap: 1rem;
+}
+
+.signin .input-box label {
+
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: var(--ff-poppins);
+
+}
+
+.signin .input-box input {
+
+    padding: .25rem .66rem;
+    width: 100%;
+
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--gray-500);
+
+    border-radius: 3px;
+    outline: 1px solid var(--light-gray-100);
+
+}
+
+.signin .input-box input:focus {
+    outline: 1px solid var(--light-gray-300);
+}
+
+
+/* FORM BOTTOM */
+
+.signin form .bottom {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.signin form .bottom a {
+
+    color: var(--red-500);
+
+    font-size: 1rem;
+    font-weight: 300;
+
+}
+
+.signin form .bottom a:hover,
+.signin form .bottom a:focus {
+    text-decoration: underline;
+}
+
+
+.signin form .bottom button {
+
+    padding: .75rem 1.5rem;
+    border-radius: .25rem;
+
+    color: white;
+    background-color: var(--blue-500);
+
+    cursor: pointer;
+
+}
+
+.signin form .bottom button:hover,
+.signin form .bottom button:focus {
+    background-color: var(--blue-700);
+}
