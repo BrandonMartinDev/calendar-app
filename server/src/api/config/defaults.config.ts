@@ -3,8 +3,20 @@
 // Types
 
 import {
+    type CorsOptions
+} from "cors";
+
+import {
     type SessionOptions
 } from "express-session";
+
+
+// Shared
+
+import {
+    BACKEND_URL,
+    FRONTEND_URL
+} from "@shared/config/settings.config";
 
 
 
@@ -12,6 +24,28 @@ import {
 
 export const PORT: number = parseInt(process.env.PORT as string) || 3000;
 export const BCRYPT_SALT_ROUNDS: number = 10;
+
+
+
+// -- == [[ CORS ]] == -- \\
+
+export const CORS_WHITELIST = [BACKEND_URL, FRONTEND_URL];
+
+export const CORS_OPTIONS: CorsOptions = {
+
+    credentials: true,
+    origin: (reqOrigin, callback) => {
+
+        if (!reqOrigin || CORS_WHITELIST.indexOf(reqOrigin) !== -1) {
+            callback(null, true)
+        } else {
+            const message = `Not allowed by CORS: ${reqOrigin}\n\nAllowed Resources Below:\n\n-----\n${CORS_WHITELIST.join("\n")}\n-----\n\n`
+            callback(new Error(message))
+        }
+
+    },
+
+}
 
 
 
