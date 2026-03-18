@@ -26,7 +26,7 @@ const RejectAuth = async (res: Response) => {
     try {
 
         SendResponse(res, {
-            statusCode: 400,
+            statusCode: 401,
             responseJson: {
                 error: "Username or password is incorrect"
             }
