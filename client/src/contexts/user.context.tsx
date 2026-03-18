@@ -161,6 +161,15 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
 
     // Change user state methods
 
+    const resetUserState = async () => {
+
+        userContextDispatch({
+            type: "USER_DATA_UPDATE",
+            payload: undefined
+        });
+
+    }
+
     const setUserToLoading = async () => {
 
         userContextDispatch({
@@ -201,6 +210,9 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
 
                 switch (response.status) {
 
+                    case 401:
+                        resetUserState();
+                        break;
                     case 403:
                         setUserToError("You are not authorized to access this resource");
                         break;
@@ -260,7 +272,6 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
                         break;
                     default:
                         setUserToError();
-
                 }
 
                 return;
