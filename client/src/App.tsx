@@ -1,14 +1,21 @@
 // -- == [[ IMPORTS ]] == -- \\
 
 // Packages
+
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router"
 
 
 
 // Pages
 
-import SignInPage from "./pages/signin"
-import { useEffect } from "react";
+import {
+
+  SignInPage,
+  CalendarPage
+
+} from "@pages/index";
+import { UserContextProvider } from "@contexts/user.context";
 
 
 
@@ -28,20 +35,24 @@ const RedirectComponent = () => {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <UserContextProvider>
+      <BrowserRouter>
+        <Routes>
 
-        <Route index element={<RedirectComponent />} />
+          <Route index element={<RedirectComponent />} />
 
-        <Route path='auth'>
-          <Route path="signin" element={<SignInPage />} />
-          {/* <Route path="/signup" element={<SignInPage />} /> */}
-        </Route>
+          <Route path='auth'>
+            <Route path="signin" element={<SignInPage />} />
+            {/* <Route path="/signup" element={<SignInPage />} /> */}
+          </Route>
 
-        <Route path="*" element={<RedirectComponent />} />
+          <Route path="/calendar" element={<CalendarPage />} />
 
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<RedirectComponent />} />
+
+        </Routes>
+      </BrowserRouter>
+    </UserContextProvider>
   )
 }
 
