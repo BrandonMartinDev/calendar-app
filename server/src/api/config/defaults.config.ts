@@ -29,7 +29,7 @@ export const BCRYPT_SALT_ROUNDS: number = 10;
 
 // -- == [[ CORS ]] == -- \\
 
-export const CORS_WHITELIST = [BACKEND_URL, FRONTEND_URL];
+export const CORS_WHITELIST = [BACKEND_URL, FRONTEND_URL, "http://localhost:5173"];
 
 export const CORS_OPTIONS: CorsOptions = {
 
@@ -39,7 +39,7 @@ export const CORS_OPTIONS: CorsOptions = {
         if (!reqOrigin || CORS_WHITELIST.indexOf(reqOrigin) !== -1) {
             callback(null, true)
         } else {
-            const message = `Not allowed by CORS: ${reqOrigin}\n\nAllowed Resources Below:\n\n-----\n${CORS_WHITELIST.join("\n")}\n-----\n\n`
+            const message = `Not allowed by CORS: '${reqOrigin}'\n\nAllowed Resources Below:\n\n-----\n${CORS_WHITELIST.join("\n")}\n-----\n\n`
             callback(new Error(message))
         }
 
