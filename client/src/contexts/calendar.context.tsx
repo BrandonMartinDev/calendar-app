@@ -8,6 +8,7 @@ import {
 } from "@shared/types/main.d";
 
 import {
+    useEffect,
     type PropsWithChildren
 } from 'react';
 
@@ -57,7 +58,7 @@ type CalendarData = {
 }
 
 type CalendarStateType = {
-    calendarData?: CalendarData,
+    calendarData: CalendarData,
     loading: boolean,
     error: false | string
 }
@@ -65,7 +66,7 @@ type CalendarStateType = {
 type CalendarReducerAction = {
 
     type: "CALENDAR_DATA_UPDATE" | "LOADING_UPDATE" | "ERROR_UPDATE";
-    payload: boolean | false | string | CalendarData | undefined;
+    payload: boolean | false | string | CalendarData;
 
 }
 
@@ -116,7 +117,7 @@ const CalendarReducer = (prevState: CalendarStateType, action: CalendarReducerAc
 
                     loading: action.payload as boolean,
                     error: false as false,
-                    calendarData: undefined
+                    calendarData: defaultCalendarState.calendarData
 
                 };
 
@@ -127,7 +128,7 @@ const CalendarReducer = (prevState: CalendarStateType, action: CalendarReducerAc
                     ...prevState,
 
                     loading: false,
-                    calendarData: undefined,
+                    calendarData: defaultCalendarState.calendarData,
                     error: action.payload as (string | false)
 
                 };
@@ -171,6 +172,38 @@ export const CalendarContext = createContext<CalendarContextType>({
 export const CalendarContextProvider = ({ children }: PropsWithChildren) => {
 
     const [calendarContextState, calendarContextDispatch] = useReducer(CalendarReducer, defaultCalendarState);
+
+    const refreshTasksForMonth = async () => {
+
+        try {
+
+            // TODO: fetch tasks from db
+
+            const fetchedTasks: Task[] = [];
+
+            calendarContextDispatch({
+
+                type: "CALENDAR_DATA_UPDATE",
+
+                payload: {
+                    ...calendarContextState.calendarData,
+                    tasks: fetchedTasks
+                }
+
+            });
+
+        } catch (error) {
+            console.warn(error);
+        }
+
+    }
+
+
+    // useEffect that runs whenever calendar month is updated
+
+    useEffect(() => {
+        refreshTasksForMonth();
+    }, [calendarContextState.calendarData.month]);
 
     return (
         <CalendarContext.Provider value={{

@@ -20,6 +20,7 @@ import { CalendarContextProvider } from '@contexts/calendar.context';
 // Components
 
 import CalendarTopbar from './components/topbar';
+import CalendarGrid from './components/calendar-grid';
 
 
 
@@ -53,7 +54,7 @@ const CalendarPage = () => {
 
                 <CalendarTopbar />
 
-                <main className="calendar-wrapper">calendar wrapper</main>
+                <CalendarGrid />
 
                 <aside className="todo-wrapper">todo wrapper</aside>
 
