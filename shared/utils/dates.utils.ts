@@ -43,6 +43,9 @@ const getDaysInMonth = (year: number, month: MonthNumber) => {
     return new Date(year, month + 1, 0).getDate();
 }
 
+const isDateWithinCurrentMonth = (date: Date, month: MonthNumber, year: number) => {
+    return (date.getMonth() === month) && (date.getFullYear() === year);
+}
 
 
 // -- == [[ EXPORTS ]] == -- \\
@@ -52,6 +55,7 @@ export {
     getDayString,
     getFirstDateInMonth,
     getLastDateInMonth,
-    getDaysInMonth
+    getDaysInMonth,
+    isDateWithinCurrentMonth
 
 }

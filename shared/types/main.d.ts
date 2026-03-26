@@ -29,7 +29,7 @@ export type Task = {
 
     _id?: string;
 
-    creator_id: User | string;
+    creator_id?: User | string;
     created_on: Date;
 
     name: string;

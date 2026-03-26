@@ -145,7 +145,7 @@ const CalendarGrid = () => {
                         return (
                             <tr key={rowNum}>
                                 {calendarLayoutRow.map((date, idx) => {
-                                    return <DayBox key={idx} date={date} />
+                                    return <DayBox key={idx} date={date} />;
                                 })}
                             </tr>
                         )
