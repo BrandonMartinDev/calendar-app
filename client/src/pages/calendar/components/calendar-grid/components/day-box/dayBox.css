@@ -1,0 +1,29 @@
+.daybox-wrapper {
+
+    --size: 10rem;
+
+    height: var(--size);
+    width: var(--size);
+
+    position: relative;
+
+    cursor: pointer;
+
+}
+
+.daybox-wrapper.grayed-out {
+    opacity: 33%;
+    cursor: auto;
+}
+
+
+
+
+.daybox-wrapper .daynum {
+
+    position: absolute;
+
+    top: 1rem;
+    right: 1rem;
+
+}

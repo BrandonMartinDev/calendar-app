@@ -1,0 +1,8 @@
+.calendar-grid {
+    padding: 10rem 0;
+}
+
+.calendar-grid .grid {
+    margin: 0 auto;
+    border-collapse: collapse;
+}

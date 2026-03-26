@@ -2,13 +2,51 @@
 
 // CSS
 
-import { useContext, useEffect, useState } from 'react';
 import './topbar.css';
+
+
+// Images
+
+import {
+    January,
+    February,
+    March,
+    April,
+    May,
+    June,
+    July,
+    August,
+    September,
+    October,
+    November,
+    December
+} from "@assets/months";
+
+const monthImages = [
+    January,
+    February,
+    March,
+    April,
+    May,
+    June,
+    July,
+    August,
+    September,
+    October,
+    November,
+    December
+] as const;
+
 
 
 // Types
 
 import type { MonthNumber } from '@shared/types/main';
+
+
+// Packages
+
+import { useContext, useEffect, useState } from 'react';
 
 
 // Contexts
@@ -26,8 +64,10 @@ import { FaArrowCircleRight, FaArrowCircleLeft } from "react-icons/fa";
 
 const CalendarTopbar = () => {
 
-    // Set topbar state
+    // Set state
+
     const [timeDisplay, setTimeDisplay] = useState<string>("Loading");
+    const [backgroundImage, setBackgroundImage] = useState<string>(January);
 
 
     // Get calendarContextState from CalendarContext
@@ -46,14 +86,17 @@ const CalendarTopbar = () => {
             const newDate = new Date(`${month + 1}/1/${year}`);
 
 
-            // Create new time display string from date, and set state
+            // Create new time display string from date, and set timeDisplay state
 
-            let newTimeDisplay: string;
-
-            newTimeDisplay = newDate.toLocaleString("default", { month: "long" });
-            newTimeDisplay += ", " + year.toString();
+            const monthString = newDate.toLocaleString("default", { month: "long" })
+            let newTimeDisplay = monthString + ", " + year.toString();
 
             setTimeDisplay(newTimeDisplay);
+
+
+            // Set background image state for current month
+
+            setBackgroundImage(monthImages[month]);
 
         } else {
             setTimeDisplay("loading...");
@@ -161,10 +204,12 @@ const CalendarTopbar = () => {
     return (
         <header className="topbar">
 
+            <img src={backgroundImage} alt="month img" />
+
             <button
                 className="today-button"
                 onClick={onTodayClick}
-            >Today</button>
+            > Today</button >
 
             <div className="month-displayer">
 
@@ -186,7 +231,7 @@ const CalendarTopbar = () => {
 
             </div>
 
-        </header>
+        </header >
     )
 }
 
