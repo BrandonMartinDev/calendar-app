@@ -1,0 +1,12 @@
+export { default as January } from "./January.png";
+export { default as February } from "./February.png";
+export { default as March } from "./March.png";
+export { default as April } from "./April.png";
+export { default as May } from "./May.png";
+export { default as June } from "./June.png";
+export { default as July } from "./July.png";
+export { default as August } from "./August.png";
+export { default as September } from "./September.png";
+export { default as October } from "./October.png";
+export { default as November } from "./November.png";
+export { default as December } from "./December.png";
