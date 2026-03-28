@@ -29,11 +29,11 @@ import {
 
 // -- == [[ CONSTANTS ]] == -- \\
 
-const ENDPOINT_URL = (`${BACKEND_URL}/api/v1/auth`);
+const ENDPOINT_URL = (`${BACKEND_URL}/api/v1/tasks`);
 
 const DEFAULT_OPTIONS: RequestInit = {
 
-    method: "POST",
+    method: "GET",
 
     credentials: "include",
 
@@ -72,6 +72,17 @@ type CalendarReducerAction = {
 
 
 // Constants
+
+const TEMP_deftasks: Task = {
+
+    created_on: new Date(),
+
+    name: "Testing displaying tasks",
+    description: "This is a test task description",
+    task_date: new Date(),
+    completed: false,
+
+}
 
 const defaultCalendarState: CalendarStateType = {
 
@@ -117,7 +128,6 @@ const CalendarReducer = (prevState: CalendarStateType, action: CalendarReducerAc
 
                     loading: action.payload as boolean,
                     error: false as false,
-                    calendarData: defaultCalendarState.calendarData
 
                 };
 
@@ -128,7 +138,6 @@ const CalendarReducer = (prevState: CalendarStateType, action: CalendarReducerAc
                     ...prevState,
 
                     loading: false,
-                    calendarData: defaultCalendarState.calendarData,
                     error: action.payload as (string | false)
 
                 };
@@ -173,13 +182,61 @@ export const CalendarContextProvider = ({ children }: PropsWithChildren) => {
 
     const [calendarContextState, calendarContextDispatch] = useReducer(CalendarReducer, defaultCalendarState);
 
+    const setStateToLoading = () => {
+
+        calendarContextDispatch({
+            type: "LOADING_UPDATE",
+            payload: true,
+        });
+
+    }
+
+    const setStateToError = (errMsg: (string | false) = "Something went wrong") => {
+
+        calendarContextDispatch({
+            type: "ERROR_UPDATE",
+            payload: errMsg,
+        });
+
+    }
+
     const refreshTasksForMonth = async () => {
 
         try {
 
-            // TODO: fetch tasks from db
+            setStateToLoading();
 
-            const fetchedTasks: Task[] = [];
+
+            // Send request to backend and verify everything is ok
+
+            const response = await fetch(ENDPOINT_URL, DEFAULT_OPTIONS);
+
+            if (!response.ok) {
+
+                switch (response.status) {
+
+                    case 429:
+                        setStateToError("Slow down, please");
+                        break;
+                    default:
+                        setStateToError();
+
+                }
+
+                return;
+
+            };
+
+
+            // Get tasks from response json
+
+            const resJson = await response.json();
+            if (!resJson || !resJson.data) throw new Error("Could not get data from response json");
+
+            const fetchedTasks: Task[] = resJson.data;
+
+
+            // Set calendar data state
 
             calendarContextDispatch({
 
@@ -193,7 +250,7 @@ export const CalendarContextProvider = ({ children }: PropsWithChildren) => {
             });
 
         } catch (error) {
-            console.warn(error);
+            setStateToError();
         }
 
     }

@@ -1,11 +1,9 @@
 .daybox-wrapper {
 
-    --size: 10rem;
+    padding: .5rem;
 
-    height: var(--size);
+    min-height: var(--size);
     width: var(--size);
-
-    position: relative;
 
     cursor: pointer;
 
@@ -20,10 +18,44 @@
 
 
 .daybox-wrapper .daynum {
+    text-align: right;
+}
 
-    position: absolute;
 
-    top: 1rem;
-    right: 1rem;
 
+.daybox-wrapper ul.tasklist {}
+
+.daybox-wrapper ul.tasklist li.create-task {
+
+    visibility: hidden;
+    opacity: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: .33rem;
+
+    border: 1px solid var(--blue-500);
+
+    font-size: 1.33rem;
+    font-weight: 400;
+    color: var(--blue-500);
+
+    transition: .15s background-color;
+
+}
+
+.daybox-wrapper ul.tasklist li.create-task:hover,
+.daybox-wrapper ul.tasklist li.create-task:focus {
+    background-color: var(--blue-500);
+    color: white;
+    opacity: 100% !important;
+}
+
+
+.daybox-wrapper:hover ul.tasklist li.create-task,
+.daybox-wrapper:focus ul.tasklist li.create-task {
+    visibility: visible;
+    opacity: 50%;
 }

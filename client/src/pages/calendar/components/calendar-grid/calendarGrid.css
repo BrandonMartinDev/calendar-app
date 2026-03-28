@@ -1,8 +1,20 @@
 .calendar-grid {
-    padding: 10rem 0;
+    padding: 7.5rem 0;
 }
 
 .calendar-grid .grid {
+
+    --size: 12.5rem;
+
     margin: 0 auto;
     border-collapse: collapse;
+}
+
+.calendar-grid .grid tr {
+    display: flex;
+}
+
+.calendar-grid .grid th {
+    width: var(--size);
+    text-align: center;
 }

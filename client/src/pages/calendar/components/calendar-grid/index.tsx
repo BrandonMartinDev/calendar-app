@@ -5,6 +5,11 @@
 import './calendarGrid.css';
 
 
+// Types
+
+import type { Task } from '@shared/types/main';
+
+
 // Shared
 
 import { getDaysInMonth, getFirstDateInMonth } from '@shared/utils/dates.utils';
@@ -24,7 +29,12 @@ import DayBox from './components/day-box';
 
 // -- == [[ COMPONENTS ]] == -- \\
 
-type CalendarLayoutRow = Date[];
+type CalendarDateLayout = {
+    date: Date;
+    tasks: Task[];
+}
+
+type CalendarLayoutRow = CalendarDateLayout[];
 type CalendarLayout = CalendarLayoutRow[];
 
 const CalendarGrid = () => {
@@ -58,24 +68,63 @@ const CalendarGrid = () => {
 
         for (let i = 0; i < daysInMonth; i++) {
 
-
             // If it is the first day, inserts startFillerDays to the row first
 
             if (i === 0) {
 
                 for (let j = startFillerDays; j > 0; j--) {
+
+                    // gets filler date by adding 1 to the negative j days before the first day
+                    // I'm bad at explaining complex things, but basically
+                    // Say 1st day of month lands on tuesday (2). That means there should be 2 "filler days"
+                    // before 1st day of month (sunday and monday)
+
                     const fillerDate = new Date(year, month, (-j) + 1);
-                    calLayoutRow.push(fillerDate);
+
+                    const fillerDateLayout: CalendarDateLayout = {
+
+                        date: fillerDate,
+                        tasks: []
+
+                    }
+
+                    calLayoutRow.push(fillerDateLayout);
+
                 }
 
             }
 
 
-            // Insert day of month for row
+            // Get day of month and tasks for the day
 
-            const date = new Date(year, month, i + 1);
+            const dayOfTheMonth = new Date(year, month, i + 1);
 
-            calLayoutRow.push(date);
+            const tasksForDate = calendarContextState.calendarData.tasks.filter((taskInfo: Task) => {
+
+                // Filters through calendarData.tasks
+
+                const year = dayOfTheMonth.getFullYear();
+                const month = dayOfTheMonth.getMonth();
+                const date = dayOfTheMonth.getDate();
+
+                const task_year = new Date(taskInfo.task_date).getFullYear();
+                const task_month = new Date(taskInfo.task_date).getMonth();
+                const task_date = new Date(taskInfo.task_date).getDate();
+
+
+                // Compares the task's date and the dayOfTheMonth date
+
+                return (year === task_year) && (month === task_month) && (date === task_date);
+
+            });
+
+
+            // Add dayLayout to row
+
+            calLayoutRow.push({
+                date: dayOfTheMonth,
+                tasks: tasksForDate
+            });
 
 
             // If it is a full row (7 days), then
@@ -101,8 +150,11 @@ const CalendarGrid = () => {
 
                 // Gets date from next month and j+1
 
-                const date = new Date(year, month + 1, j + 1);
-                calLayoutRow.push(date);
+                const fillerDate = new Date(year, month + 1, j + 1);
+                calLayoutRow.push({
+                    date: fillerDate,
+                    tasks: []
+                });
 
             }
 
@@ -144,9 +196,18 @@ const CalendarGrid = () => {
 
                         return (
                             <tr key={rowNum}>
-                                {calendarLayoutRow.map((date, idx) => {
-                                    return <DayBox key={idx} date={date} />;
+
+                                {calendarLayoutRow.map((dayLayoutInfo, idx) => {
+
+                                    return (
+                                        <DayBox
+                                            key={idx}
+                                            date={dayLayoutInfo.date}
+                                            tasks={dayLayoutInfo.tasks}
+                                        />
+                                    )
                                 })}
+
                             </tr>
                         )
 
