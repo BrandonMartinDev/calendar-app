@@ -44,6 +44,7 @@ const DayBox = ({ date, tasks }: DayBoxProps) => {
     // Set day box states
 
     const [grayedOut, setGrayedOut] = useState<boolean>(false);
+    const [isToday, setIsToday] = useState<boolean>(false);
 
 
 
@@ -63,12 +64,23 @@ const DayBox = ({ date, tasks }: DayBoxProps) => {
 
         setGrayedOut(!isDateWithinCurrentMonth(date, month, year));
 
+
+        // Sets if the daybox day is the current day
+
+        const todayDate = new Date();
+        
+        setIsToday(todayDate.getDate() === date.getDate() && todayDate.getMonth() === month && todayDate.getFullYear() === year);
+
     }, [date, JSON.stringify(calendarContextState)]);
 
     return (
         <td className={`daybox-wrapper ${grayedOut ? "grayed-out" : ""}`}>
 
-            <p className='daynum'>{date.getDate()}</p>
+            <p className='daynum'>
+                {isToday
+                    ? <strong>{date.getDate()}</strong>
+                    : date.getDate()}
+            </p>
 
             <ul className="tasklist">
 
