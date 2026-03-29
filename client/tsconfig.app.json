@@ -39,6 +39,9 @@
       ],
       "@assets/*": [
         "./src/assets/*"
+      ],
+      "@common/*": [
+        "./src/common/*"
       ]
     }
   },

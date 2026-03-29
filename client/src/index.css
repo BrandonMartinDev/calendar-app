@@ -10,7 +10,7 @@
     /* COLORS */
 
     --red-500: #b62525;
-    
+
     --blue-500: #2e73cc;
     --blue-700: #1f57a0;
 
@@ -92,5 +92,10 @@ button {
 }
 
 .page-wrapper {
+    
     height: 100%;
+
+    overflow: hidden;
+    overflow-y: auto;
+
 }
