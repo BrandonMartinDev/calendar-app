@@ -21,6 +21,7 @@ import { CalendarContextProvider } from '@contexts/calendar.context';
 
 import CalendarTopbar from './components/topbar';
 import CalendarGrid from './components/calendar-grid';
+import CreateTaskModal from '@common/components/modal/modals/create-task';
 
 
 
@@ -51,6 +52,8 @@ const CalendarPage = () => {
     return (
         <CalendarContextProvider>
             <div className="page-wrapper calendar">
+
+                <CreateTaskModal />
 
                 <CalendarTopbar />
 
