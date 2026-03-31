@@ -38,3 +38,15 @@ export type Task = {
     completed: boolean;
 
 }
+
+
+
+// -- == [[ CALENDAR LAYOUT ]] == -- \\
+
+export type CalendarDateLayout = {
+    date: Date;
+    tasks: Task[];
+}
+
+export type CalendarLayoutRow = CalendarDateLayout[];
+export type CalendarLayout = CalendarLayoutRow[];
