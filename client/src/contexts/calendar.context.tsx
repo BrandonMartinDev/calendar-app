@@ -26,6 +26,11 @@ import {
 } from "react";
 
 
+// Contexts
+
+import CalendarModalContextProvider from "./calendar-modal.context";
+
+
 
 // -- == [[ CONSTANTS ]] == -- \\
 
@@ -72,17 +77,6 @@ type CalendarReducerAction = {
 
 
 // Constants
-
-const TEMP_deftasks: Task = {
-
-    created_on: new Date(),
-
-    name: "Testing displaying tasks",
-    description: "This is a test task description",
-    task_date: new Date(),
-    completed: false,
-
-}
 
 const defaultCalendarState: CalendarStateType = {
 
@@ -166,12 +160,14 @@ type CalendarContextType = {
 
     calendarContextState: CalendarStateType;
     calendarContextDispatch: React.ActionDispatch<[action: CalendarReducerAction]>;
+    refreshTasksForMonth: () => any;
 
 }
 
 export const CalendarContext = createContext<CalendarContextType>({
     calendarContextState: defaultCalendarState,
     calendarContextDispatch: () => { },
+    refreshTasksForMonth: () => { }
 });
 
 
@@ -268,8 +264,12 @@ export const CalendarContextProvider = ({ children }: PropsWithChildren) => {
             calendarContextState,
             calendarContextDispatch,
 
+            refreshTasksForMonth
+
         }}>
-            {children}
+            <CalendarModalContextProvider>
+                {children}
+            </CalendarModalContextProvider>
         </CalendarContext.Provider>
     )
 

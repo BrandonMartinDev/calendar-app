@@ -5,95 +5,89 @@
 import './create-task-modal.css';
 
 
+// Packages
+
+import { useContext } from 'react';
+
+
 // Components
 
 import Modal from '../..';
 import ModalInputBox from '@common/components/modal-input-box';
-import { useReducer } from 'react';
 
 
-// -- == [[ REDUCERS ]] == -- \\
+// Contexts
 
-// Types
-
-type TaskModalState = {
-
-    name: string;
-    description: string;
-    date: Date;
-    completed: boolean;
-
-}
-
-type TaskModalReducerAction = {
-
-    type: "NAME" | "DESCRIPTION" | "DATE" | "COMPLETED";
-    payload: string | Date | boolean;
-
-}
+import { CalendarModalContext } from '@contexts/calendar-modal.context';
 
 
-// Constants
+// Icons
 
-const defaultCreateTaskModal: TaskModalState = {
-
-    name: "",
-    description: "",
-    date: new Date(),
-    completed: false,
-
-}
-
-
-// Methods
-
-const CreateTaskModalReducer = (prevState: TaskModalState, action: TaskModalReducerAction): TaskModalState => {
-
-    switch (action.type) {
-
-        case "NAME":
-            return { ...prevState, name: action.payload as string }
-        case "DESCRIPTION":
-            return { ...prevState, description: action.payload as string }
-        case "DATE":
-            return { ...prevState, date: action.payload as Date }
-        case "COMPLETED":
-            return { ...prevState, completed: action.payload as boolean }
-
-        default:
-            throw new Error("action.type '" + action.type + "' is NOT valid!");
-
-    }
-
-}
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { IoIosWarning } from 'react-icons/io';
 
 
 
 // -- == [[ COMPONENTS ]] == -- \\
 
+const CreateTaskModalLoading = () => {
+
+    return (
+        <Modal className='create'>
+
+            <h3>New Task</h3>
+
+            <div className='loading'>
+                <AiOutlineLoading3Quarters className='icon' />
+            </div>
+
+        </Modal>
+    )
+
+}
+
 const CreateTaskModal = () => {
 
-    // Set up create task modal reducer state
+    // Get calendar modal state
 
-    const [createTaskModalState, setCreateTaskModalState] = useReducer(CreateTaskModalReducer, defaultCreateTaskModal);
+    const {
+
+        calendarModalState,
+        calendarModalDispatch,
+
+        createTask
+
+    } = useContext(CalendarModalContext);
 
 
     // OnChange Methods
 
     const onNameChange = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
 
-        setCreateTaskModalState({
-            type: "NAME",
-            payload: e.target.value.toString()
+        calendarModalDispatch({
+
+            type: "UPDATE_SELECTED_TASK_DATA",
+
+            payload: {
+                ...calendarModalState.selectedTaskData,
+                name: e.target.value
+            }
+
         });
 
     }
 
     const onDescChange = (e: React.ChangeEvent<HTMLTextAreaElement, HTMLTextAreaElement>) => {
 
-        setCreateTaskModalState({
-            type: "DESCRIPTION",
-            payload: e.target.value.toString()
+        calendarModalDispatch({
+
+            type: "UPDATE_SELECTED_TASK_DATA",
+
+            payload: {
+                ...calendarModalState.selectedTaskData,
+                description: e.target.value
+            }
+
         });
 
     }
@@ -104,18 +98,30 @@ const CreateTaskModal = () => {
 
         const newDate = new Date(parseInt(year), (parseInt(month) - 1), parseInt(date));
 
-        setCreateTaskModalState({
-            type: "DATE",
-            payload: newDate
+        calendarModalDispatch({
+
+            type: "UPDATE_SELECTED_TASK_DATA",
+
+            payload: {
+                ...calendarModalState.selectedTaskData,
+                task_date: newDate
+            }
+
         });
 
     }
 
     const onCompletedChange = () => {
 
-        setCreateTaskModalState({
-            type: "COMPLETED",
-            payload: !createTaskModalState.completed
+        calendarModalDispatch({
+
+            type: "UPDATE_SELECTED_TASK_DATA",
+
+            payload: {
+                ...calendarModalState.selectedTaskData,
+                completed: !calendarModalState.selectedTaskData.completed
+            }
+
         });
 
     }
@@ -126,19 +132,27 @@ const CreateTaskModal = () => {
     const onCancelClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 
         e.preventDefault();
+        calendarModalDispatch({ type: "HIDE_MODAL" });
 
     }
 
     const onSaveClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 
         e.preventDefault();
+        createTask();
 
     }
+
+
+    // Check currently shown calendar modal is "CREATE", 
+    // if not then just return nothing
+    if (calendarModalState.shownModal !== "CREATE") return;
+    if (calendarModalState.loading) return <CreateTaskModalLoading />;
 
     return (
         <Modal className='create'>
 
-            <h3>Create Task</h3>
+            <h3>New Task</h3>
 
             <form>
 
@@ -148,7 +162,7 @@ const CreateTaskModal = () => {
                     inputName='task-name'
                     labelText='Task Name:'
 
-                    value={createTaskModalState.name}
+                    value={calendarModalState.selectedTaskData.name}
                     onChange={onNameChange}
 
                 />
@@ -159,7 +173,7 @@ const CreateTaskModal = () => {
                     inputName='task-desc'
                     labelText='Task Description:'
 
-                    value={createTaskModalState.description}
+                    value={calendarModalState.selectedTaskData.description || ""}
                     onChange={onDescChange}
 
                 />
@@ -170,7 +184,7 @@ const CreateTaskModal = () => {
                     inputName='task-date'
                     labelText='Task Date:'
 
-                    value={createTaskModalState.date.toLocaleDateString("en-CA")}
+                    value={calendarModalState.selectedTaskData.task_date.toLocaleDateString("en-CA")}
                     onChange={onDateChange}
 
                 />
@@ -181,12 +195,19 @@ const CreateTaskModal = () => {
                     inputName='task-completed'
                     labelText='Mark Task as Completed:'
 
-                    value={createTaskModalState.completed}
+                    value={calendarModalState.selectedTaskData.completed}
                     onChange={onCompletedChange}
 
                 />
 
             </form>
+
+            {calendarModalState.error && (
+                <div className="error">
+                    <IoIosWarning />
+                    <p>{calendarModalState.error}</p>
+                </div>
+            )}
 
             <div className="choice-wrapper">
 

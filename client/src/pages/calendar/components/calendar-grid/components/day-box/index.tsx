@@ -23,7 +23,9 @@ import { FaCirclePlus } from "react-icons/fa6";
 
 
 // Components
+
 import TaskComponent from '../task';
+import { CalendarModalContext } from '@contexts/calendar-modal.context';
 
 
 
@@ -39,6 +41,7 @@ const DayBox = ({ date, tasks }: DayBoxProps) => {
     // Get calendarContextState
 
     const { calendarContextState } = useContext(CalendarContext);
+    const { calendarModalState, calendarModalDispatch, resetSelectedTaskState } = useContext(CalendarModalContext);
 
 
     // Set day box states
@@ -68,10 +71,43 @@ const DayBox = ({ date, tasks }: DayBoxProps) => {
         // Sets if the daybox day is the current day
 
         const todayDate = new Date();
-        
+
         setIsToday(todayDate.getDate() === date.getDate() && todayDate.getMonth() === month && todayDate.getFullYear() === year);
 
     }, [date, JSON.stringify(calendarContextState)]);
+
+
+
+    // Methods
+
+    const onCreateTaskClick = () => {
+
+        // Reset task state to default
+        resetSelectedTaskState();
+
+
+        // Set selected task's task_date to daybox date
+
+        calendarModalDispatch({
+
+            type: "UPDATE_SELECTED_TASK_DATA",
+
+            payload: {
+                ...calendarModalState.selectedTaskData,
+                task_date: date
+            }
+
+        });
+
+
+        // Show modal
+
+        calendarModalDispatch({
+            type: "DISPLAY_MODAL",
+            payload: "CREATE"
+        });
+
+    }
 
     return (
         <td className={`daybox-wrapper ${grayedOut ? "grayed-out" : ""}`}>
@@ -85,11 +121,19 @@ const DayBox = ({ date, tasks }: DayBoxProps) => {
             <ul className="tasklist">
 
                 {tasks.map((taskInfo, idx) => {
-                    return <TaskComponent key={idx} name={taskInfo.name} />;
+                    return (
+                        <TaskComponent
+                            key={idx}
+                            taskInfo={taskInfo}
+                        />
+                    );
                 })}
 
                 {!grayedOut && (
-                    <li className='create-task'>
+                    <li
+                        className='create-task'
+                        onClick={onCreateTaskClick}
+                    >
                         <FaCirclePlus className='icon' />
                     </li>
                 )}

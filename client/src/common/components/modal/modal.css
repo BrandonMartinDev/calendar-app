@@ -34,6 +34,67 @@
 
 
 
+/* LOADING */
+
+.modal-foreground .loading {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 1rem;
+
+}
+
+.modal-foreground .loading .icon {
+    color: var(--blue-500);
+    animation: 1s infinite linear spin;
+}
+
+@keyframes spin {
+
+    0% {
+        rotate: 0deg;
+        opacity: 100%;
+    }
+
+    50% {
+        rotate: 180deg;
+        opacity: 50%;
+    }
+
+    100% {
+        rotate: 360deg;
+        opacity: 100%;
+    }
+
+}
+
+
+
+/* ERROR */
+
+.modal-foreground .error {
+
+    margin-bottom: 1rem;
+    padding: .4rem .75rem;
+    border-radius: .25rem;
+
+    background-color: var(--red-500);
+    color: white;
+    font-size: 1.2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: .5rem;
+
+}
+
+
+
 /* FORM */
 
 .modal-background form {
@@ -46,7 +107,7 @@
 
     gap: 1rem;
     margin: 2rem 0;
-    min-width: 23rem;
+    min-width: 25rem;
 
     font-size: 1.2rem;
 

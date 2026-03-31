@@ -5,19 +5,28 @@
 import './task.css';
 
 
+// Types
+
+import type { Task } from '@shared/types/main';
+
+
 
 // -- == [[ COMPONENTS ]] == -- \\
 
 type TaskProps = {
-    name: string;
+    taskInfo: Task
 }
 
-const Task = ({ name }: TaskProps) => {
-    return <li className='task'>{name}</li>;
+const TaskComponent = ({ taskInfo }: TaskProps) => {
+    return (
+        <li
+            className={`task ${taskInfo.completed ? "completed" : ""}`}
+        >{taskInfo.name}</li>
+    );
 }
 
 
 
 // -- == [[ EXPORTS ]] == -- \\
 
-export default Task
+export default TaskComponent

@@ -15,4 +15,12 @@
     overflow: hidden;
     text-wrap-mode: nowrap;
 
+    cursor: pointer;
+
+}
+
+.daybox-wrapper ul.tasklist li.completed {
+    text-decoration: line-through;
+    color: var(--blue-500);
+    border-color: var(--blue-500);
 }
