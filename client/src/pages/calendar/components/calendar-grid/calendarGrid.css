@@ -1,5 +1,6 @@
 .calendar-grid {
-    padding: 7.5rem 0;
+    padding: 7.5rem 1rem;
+    overflow-x: auto;
 }
 
 .calendar-grid .grid {
@@ -8,13 +9,45 @@
 
     margin: 0 auto;
     border-collapse: collapse;
+
+    max-width: calc(var(--size) * 7);
+    width: 100%;
+
 }
 
 .calendar-grid .grid tr {
     display: flex;
+    align-items: top;
+    gap: 2rem;
+}
+
+@media (max-width: 950px) {
+
+    .calendar-grid {
+        padding: 3rem 1rem;
+    }
+
+    .calendar-grid .grid {
+        --size: 10rem;
+    }
+
+}
+
+@media (max-width: 750px) {
+
+    .calendar-grid .grid {
+        --size: 4rem;
+    }
+
+    .calendar-grid .grid th,
+    .calendar-grid .grid td {
+        font-size: calc(var(--size) * .175);
+    }
+
 }
 
 .calendar-grid .grid th {
-    width: var(--size);
+    flex: 1;
+    max-width: var(--size);
     text-align: center;
 }

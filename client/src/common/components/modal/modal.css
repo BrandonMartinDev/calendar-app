@@ -125,7 +125,6 @@
 .modal-background form .modal-input-box:has(input[type="checkbox"]) {
     flex-direction: row;
     justify-content: space-between;
-
 }
 
 .modal-background form label {
@@ -146,6 +145,15 @@
     width: 100%;
     resize: vertical;
     max-height: 25rem;
+}
+
+.modal-background form input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.modal-background form input[type="date"] {
+    cursor: pointer;
+    width: 100%;
 }
 
 

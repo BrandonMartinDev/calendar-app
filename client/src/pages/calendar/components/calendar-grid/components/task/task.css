@@ -19,6 +19,14 @@
 
 }
 
+@media (max-width: 750px) {
+    .daybox-wrapper ul.tasklist li {
+        padding: .05rem .25rem;
+        font-size: .6rem;
+        border-radius: .15rem;
+    }
+}
+
 .daybox-wrapper ul.tasklist li.completed {
     text-decoration: line-through;
     color: var(--blue-500);

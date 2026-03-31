@@ -3,7 +3,8 @@
     padding: .5rem;
 
     min-height: var(--size);
-    width: var(--size);
+    max-width: var(--size);
+    flex: 1;
 
 }
 
@@ -14,14 +15,12 @@
 
 
 
-
 .daybox-wrapper .daynum {
     text-align: right;
+    margin-bottom: .5rem;
 }
 
 
-
-.daybox-wrapper ul.tasklist {}
 
 .daybox-wrapper ul.tasklist li.create-task {
 
@@ -36,7 +35,7 @@
 
     border: 1px solid var(--blue-500);
 
-    font-size: 1.33rem;
+    font-size: calc(var(--size) * .11);
     font-weight: 400;
     color: var(--blue-500);
 
@@ -58,4 +57,16 @@
 .daybox-wrapper:focus ul.tasklist li.create-task {
     visibility: visible;
     opacity: 50%;
+}
+
+
+
+@media (max-width: 750px) {
+
+    .daybox-wrapper ul.tasklist li.create-task {
+        padding: .05rem .25rem;
+        font-size: .6rem;
+        border-radius: .15rem;
+    }
+
 }

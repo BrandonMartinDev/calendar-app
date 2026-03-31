@@ -1,3 +1,5 @@
+/* HEADER */
+
 .calendar header {
 
     padding: 1rem 5rem;
@@ -12,6 +14,21 @@
 
     position: relative;
 
+}
+
+@media (max-width: 550px) {
+    .calendar header {
+
+        flex-direction: column-reverse;
+        align-content: center;
+        justify-content: center;
+
+        gap: 1rem;
+        padding: 1rem;
+
+        min-height: 15rem;
+
+    }
 }
 
 .calendar header img {
@@ -31,24 +48,18 @@
 
 }
 
-.calendar header .month-displayer {
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    gap: 3rem;
-
-}
+/* TODAY BUTTON */
 
 .calendar header .today-button {
 
-    color: black;
-    background-color: white;
+    color: white;
+    background: none;
+    backdrop-filter: blur(5px);
 
-    border-radius: 6px;
-    border: 1px solid rgba(0, 0, 0, .3);
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, .15);
+    border-radius: .25rem;
+    border: 1px solid white;
 
     font-size: 1.6rem;
     padding: .75rem 2rem;
@@ -60,8 +71,45 @@
 .calendar header .today-button:hover {
     color: white;
     background-color: var(--blue-500);
+    border: 1px solid var(--blue-500);
 }
 
 .calendar header .today-button:active {
     background-color: var(--blue-700);
+}
+
+
+
+/* MONTH DISPLAYER */
+
+.calendar header .month-displayer {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: .25rem;
+
+    color: white;
+
+}
+
+.calendar header .month-displayer button {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: none;
+    color: white;
+    outline: none;
+
+    transition: .15s color;
+
+}
+
+.calendar header .month-displayer button:hover {
+    color: var(--blue-500);
 }
