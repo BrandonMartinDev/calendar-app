@@ -56,7 +56,7 @@ const TaskSchema = new Schema<Task>({
 
         trim: true,
 
-        minLength: 1,
+        minLength: 0,
         maxLength: 2500,
 
         required: false,
