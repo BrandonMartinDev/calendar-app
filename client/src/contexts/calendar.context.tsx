@@ -88,7 +88,7 @@ const defaultCalendarState: CalendarStateType = {
 
     },
 
-    loading: true,
+    loading: false,
     error: false
 
 }

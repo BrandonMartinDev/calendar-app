@@ -59,8 +59,6 @@ const CalendarPage = () => {
         <CalendarContextProvider>
             <div className="page-wrapper calendar">
 
-                <CreateTaskModal />
-
                 <CalendarTopbar />
 
                 <CalendarGrid />
