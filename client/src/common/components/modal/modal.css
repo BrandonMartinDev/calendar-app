@@ -21,6 +21,7 @@
     padding: 2rem;
     border-radius: .33rem;
     box-shadow: 1px 1px 6px rgba(0, 0, 0, .15);
+    max-width: 35rem;
 
 }
 
@@ -158,6 +159,66 @@
 
 
 
+/* TASK INFO */
+
+.modal-background .task-info {
+
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+
+    gap: 1rem;
+
+    margin: 2rem 0;
+
+}
+
+.modal-background .task-info strong {
+    font-weight: 500;
+}
+
+.modal-background .task-info p {
+    font-size: 1.4rem;
+}
+
+.modal-background .task-info .bottom {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.modal-background .task-info .bottom,
+.modal-background .task-info .bottom i {
+    font-family: var(--ff-poppins);
+}
+
+.modal-background .task-info .bottom .completed {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: .5rem;
+
+    font-size: 1rem;
+
+    cursor: default;
+
+}
+
+.modal-background .task-info .bottom small {
+
+    font-size: 1rem;
+    text-align: right;
+    flex: 1;
+
+}
+
+
+
 /* CHOICES (cancel/submit buttons) */
 
 .modal-background .choice-wrapper {
@@ -198,5 +259,27 @@
 
 .modal-background button.submit:hover {
     background-color: var(--blue-500);
+    color: white;
+}
+
+
+.modal-background button.edit {
+    background: none;
+    color: black;
+}
+
+.modal-background button.edit:hover {
+    background-color: var(--yellow-500);
+    color: white;
+}
+
+
+.modal-background button.delete {
+    background: none;
+    color: black;
+}
+
+.modal-background button.delete:hover {
+    background-color: var(--red-500);
     color: white;
 }

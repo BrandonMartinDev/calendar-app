@@ -1,0 +1,151 @@
+// -- == [[ IMPORTS ]] == -- \\
+
+// CSS
+
+import './delete-task-modal.css';
+
+
+// Packages
+
+import { useContext } from 'react';
+
+
+// Components
+
+import Modal from '../..';
+
+
+// Contexts
+
+import { CalendarModalContext } from '@contexts/calendar-modal.context';
+
+
+// Icons
+
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { IoIosWarning } from 'react-icons/io';
+import { LuSquareCheckBig } from "react-icons/lu";
+
+
+
+// -- == [[ COMPONENTS ]] == -- \\
+
+const DeleteTaskModalLoading = () => {
+
+    return (
+        <Modal className='delete'>
+
+            <h3>Deleting Task</h3>
+
+            <div className='loading'>
+                <AiOutlineLoading3Quarters className='icon' />
+            </div>
+
+        </Modal>
+    )
+
+}
+
+const DeleteTaskModal = () => {
+
+    // Get calendar modal state
+
+    const {
+
+        calendarModalState,
+        calendarModalDispatch,
+
+        resetSelectedTaskState,
+        deleteSelectedTask
+
+    } = useContext(CalendarModalContext);
+
+    const {
+        name,
+        description,
+        task_date,
+        completed
+    } = calendarModalState.selectedTaskData;
+
+
+    // OnClick methods
+
+    const onCancelClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+
+        e.preventDefault();
+        calendarModalDispatch({ type: "HIDE_MODAL" });
+        resetSelectedTaskState();
+
+    }
+
+    const onConfirmDeleteClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+
+        e.preventDefault();
+        deleteSelectedTask();
+
+    }
+
+
+    // Check currently shown calendar modal is "DELETE", 
+    // if not then just return nothing
+    if (calendarModalState.shownModal !== "DELETE") return;
+    if (calendarModalState.loading) return <DeleteTaskModalLoading />
+
+    return (
+        <Modal className='delete'>
+
+            <h3>Delete Task</h3>
+
+            <div className="task-info">
+
+                <small><strong><i>This action cannot is permanent and cannot be reversed</i></strong></small>
+
+                <p><strong>{name}</strong></p>
+                <p>{description || "N/A"}</p>
+
+                <div className="bottom">
+
+                    {completed && (
+                        <div className="completed">
+                            <small>Marked as Completed</small>
+                            <LuSquareCheckBig className='icon' />
+                        </div>
+                    )}
+
+                    <small><i>{new Date(task_date).toLocaleDateString()}</i></small>
+
+                </div>
+
+            </div>
+
+            {calendarModalState.error && (
+                <div className="error">
+                    <IoIosWarning />
+                    <p>{calendarModalState.error}</p>
+                </div>
+            )}
+
+            <div className="choice-wrapper">
+
+                <button
+                    className='delete'
+                    onClick={onConfirmDeleteClick}
+                >Delete</button>
+
+                <button
+                    className='cancel'
+                    onClick={onCancelClick}
+                >Cancel</button>
+
+            </div>
+
+
+        </Modal>
+    )
+}
+
+
+
+// -- == [[ EXPORTS ]] == -- \\
+
+export default DeleteTaskModal;

@@ -1,0 +1,17 @@
+.modal-background.delete .modal-foreground {
+    background-color: var(--red-500);
+    color: white;
+}
+
+
+.modal-background.delete .modal-foreground button.delete {
+    color: white;
+}
+
+.modal-background.delete .modal-foreground button.delete:hover {
+    background-color: rgb(221, 52, 52);
+}
+
+.modal-background.delete .modal-foreground button.cancel:hover {
+    background-color: rgb(80, 80, 80);
+}

@@ -1,0 +1,8 @@
+.modal-background.view.completed .modal-foreground {
+    background-color: var(--blue-500);
+    color: white;
+}
+
+.modal-background.view.completed .modal-foreground button {
+    color: white;
+}
