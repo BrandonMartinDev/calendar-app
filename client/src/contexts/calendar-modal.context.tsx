@@ -31,6 +31,7 @@ import { CalendarContext } from "./calendar.context";
 import ViewTaskModal from "@common/components/modal/modals/view-task";
 import CreateTaskModal from "@common/components/modal/modals/create-task";
 import DeleteTaskModal from "@common/components/modal/modals/delete-task";
+import EditTaskModal from "@common/components/modal/modals/edit-task";
 
 
 
@@ -90,6 +91,8 @@ const defaultCalendarModalContext: CalendarModalStateType = {
     shownModal: false,
 
     selectedTaskData: {
+
+        creator_id: "",
 
         created_on: new Date(),
         name: "",
@@ -161,6 +164,7 @@ type CalendarModalContextType = {
 
     createTask: () => void;
     deleteSelectedTask: () => void;
+    editSelectedTask: () => void;
 
 }
 
@@ -171,7 +175,8 @@ export const CalendarModalContext = createContext<CalendarModalContextType>({
     resetSelectedTaskState: () => { },
 
     createTask: () => { },
-    deleteSelectedTask: () => { }
+    deleteSelectedTask: () => { },
+    editSelectedTask: () => { },
 
 });
 
@@ -347,6 +352,77 @@ const CalendarModalContextProvider = ({ children }: PropsWithChildren) => {
 
     }
 
+    const editSelectedTask = async () => {
+
+        try {
+
+            // Check if task data is valid
+
+            const validTaskData = isValidTaskData(calendarModalState.selectedTaskData);
+            if (!validTaskData) throw new Error("Not valid task data");
+
+
+            // Set modal state to loading and prepare request
+
+            setModalStateToLoading();
+
+            const {
+                name,
+                description,
+                task_date,
+                completed
+            } = calendarModalState.selectedTaskData;
+
+            const options = OPTIONS;
+
+            options.body = JSON.stringify({
+                name: name,
+                description: description,
+                task_date: task_date,
+                completed: completed
+            });
+
+            options.method = "PUT";
+
+            const url = (`${ENDPOINT_URL}/${calendarModalState.selectedTaskData._id}`)
+
+
+            // Send request to backend and verify everything is ok
+
+            const response = await fetch(url, options);
+
+            if (!response.ok) {
+
+                switch (response.status) {
+
+                    case 400:
+                        setModalStateToErrored("Task was not in the valid format");
+                        break;
+                    case 429:
+                        setModalStateToErrored("Slow down, please");
+                        break;
+                    default:
+                        setModalStateToErrored();
+
+                }
+
+                return;
+
+            };
+
+
+            // If everything is ok then refresh tasks for month and hide modal
+
+            refreshTasksForMonth();
+            hideModal();
+            resetState();
+
+        } catch (error) {
+            setModalStateToErrored();
+        }
+
+    }
+
     return (
         <CalendarModalContext.Provider value={{
 
@@ -356,12 +432,16 @@ const CalendarModalContextProvider = ({ children }: PropsWithChildren) => {
             resetSelectedTaskState,
 
             createTask,
-            deleteSelectedTask
+            deleteSelectedTask,
+            editSelectedTask
 
         }}>
+
             <CreateTaskModal />
             <ViewTaskModal />
             <DeleteTaskModal />
+            <EditTaskModal />
+
             {children}
         </CalendarModalContext.Provider>
     )

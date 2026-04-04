@@ -76,6 +76,11 @@ const ViewTaskModal = () => {
 
         e.preventDefault();
 
+        calendarModalDispatch({
+            type: "DISPLAY_MODAL",
+            payload: "EDIT"
+        });
+
     }
 
     const onDeleteClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -85,7 +90,7 @@ const ViewTaskModal = () => {
         calendarModalDispatch({
             type: "DISPLAY_MODAL",
             payload: "DELETE"
-        })
+        });
 
     }
 
