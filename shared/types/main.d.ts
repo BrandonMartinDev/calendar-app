@@ -1,10 +1,7 @@
 // -- == [[ TIME ]] == -- \\
 
-const dayNums = [0, 1, 2, 3, 4, 5, 6] as const;
-const monthNums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
-
-export type DayNumber = (typeof dayNums)[number];
-export type MonthNumber = (typeof monthNums)[number];
+export type DayNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type MonthNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 
 
 
