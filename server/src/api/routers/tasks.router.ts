@@ -20,6 +20,8 @@ import {
     CreateNewTaskController,
 
     DeleteTaskController,
+    
+    EditSpecificTaskController,
 
 } from "@controllers/tasks.controller";
 
@@ -36,7 +38,7 @@ const TaskRouter = express.Router();
 TaskRouter.route("/:task_id")
     .get(ValidateUserIsLoggedIn, GetSpecificTaskInfoController)
     .delete(ValidateUserIsLoggedIn, DeleteTaskController)
-    //     .put(ValidateUserIsLoggedIn);
+    .put(ValidateRequestBodyExists, ValidateUserIsLoggedIn, EditSpecificTaskController);
 
 TaskRouter.route("/")
     .get(ValidateUserIsLoggedIn, GetUserTasksController)

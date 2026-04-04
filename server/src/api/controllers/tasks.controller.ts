@@ -159,6 +159,7 @@ const GetSpecificTaskInfoController = async (req: Request, res: Response, next: 
 }
 
 
+
 // Create
 
 const CreateNewTaskController = async (req: Request, res: Response, next: NextFunction) => {
@@ -223,6 +224,7 @@ const CreateNewTaskController = async (req: Request, res: Response, next: NextFu
 }
 
 
+
 // Delete
 
 const DeleteTaskController = async (req: Request, res: Response, next: NextFunction) => {
@@ -244,7 +246,7 @@ const DeleteTaskController = async (req: Request, res: Response, next: NextFunct
         if (!task_id) throw new Error("Could not get task_id from params");
 
         const task = await GetSpecificTaskInfo(task_id.toString());
-        
+
         if (!task) {
             RejectMissingTask(res);
             return;
@@ -286,6 +288,95 @@ const DeleteTaskController = async (req: Request, res: Response, next: NextFunct
 
 
 
+// Edit
+
+const EditSpecificTaskController = async (req: Request, res: Response, next: NextFunction) => {
+
+    try {
+
+        // Get user info from logged in user id
+
+        const loggedInUserID = req.session.loggedInUserID;
+        if (!loggedInUserID) throw new Error("Could not get loggedInUserID");
+
+        const user = await GetUserByID(loggedInUserID, true);
+        if (!user) throw new Error("Could not get user from loggedInUserID");
+
+
+        // Get task info from params
+
+        const { task_id } = req.params;
+        if (!task_id) throw new Error("Could not get task_id from params");
+
+        const task = await GetSpecificTaskInfo(task_id.toString());
+
+        if (!task) {
+            RejectMissingTask(res);
+            return;
+        }
+
+
+        // Ensures logged in user owns task
+
+        if (task.creator_id.toString() !== user._id.toString()) {
+
+            SendResponse(res, {
+                statusCode: 401,
+                responseJson: {
+                    error: "Unauthorized"
+                }
+            });
+
+            return;
+
+        }
+
+
+        // Gets new task info from request body and verifies it exists
+
+        const {
+            name,
+            description,
+            task_date,
+            completed
+        } = req.body;
+
+        if (!name || !task_date || typeof completed !== "boolean") {
+            RejectTaskAction(res);
+            return;
+        }
+
+
+        // Sets task's info to info from request body and saves it to db
+
+        task.name = name;
+        task.description = description;
+        task.task_date = task_date;
+        task.completed = completed;
+
+        await task.save();
+
+
+        // Sanitizes new task and returns response
+
+        const sanitizedTask = SanitizeTask(task);
+
+        SendResponse(res, {
+            statusCode: 200,
+            responseJson: {
+                message: (`Successfully updated ${task._id}`),
+                data: sanitizedTask
+            }
+        });
+
+    } catch (error) {
+        HandleError(res, { error: error });
+    }
+
+}
+
+
+
 // -- == [[ EXPORTS ]] == -- \\
 
 export {
@@ -299,5 +390,8 @@ export {
 
     // Delete
     DeleteTaskController,
+
+    // Edit
+    EditSpecificTaskController
 
 }
