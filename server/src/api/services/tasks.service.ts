@@ -42,7 +42,7 @@ const GetSpecificTaskInfo = async (taskID: IDType, populateCreatorID: boolean = 
 
         // Find task in database and return it
 
-        let task: Task | null;
+        let task;
 
         if (populateCreatorID === true) {
             task = await TaskModel.findOne().where("_id").equals(taskID).populate("creator_id");
