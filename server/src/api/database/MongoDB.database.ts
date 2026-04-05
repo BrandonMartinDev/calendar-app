@@ -1,7 +1,7 @@
 // -- == [[ IMPORTS ]] == -- \\
 
 // Config
-import { MONGO_CONNECTION_STRING } from "@config/defaults.config";
+import { MONGO_CONNECTION_STRING } from "@config/defaults.config.js";
 
 
 // Modules
@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 
 
 // Utils
-import HandleError from "@utils/handleError.util";
+import HandleError from "@utils/handleError.util.js";
 
 
 

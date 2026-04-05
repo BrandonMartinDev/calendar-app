@@ -16,7 +16,7 @@ import {
 import {
     BACKEND_URL,
     FRONTEND_URL
-} from "@shared/config/settings.config";
+} from "@shared/config/settings.config.js";
 
 
 

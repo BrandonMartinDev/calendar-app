@@ -9,13 +9,16 @@ import {
 } from "express";
 
 
+// Services
+import { GetUserByID, GetUserByUsername } from "@services/user.service.js";
+
+
 // Utils
 
-import HandleError from "@utils/handleError.util";
-import SendResponse from "@utils/sendResponse.util";
-import { GetUserByID, GetUserByUsername } from "@services/user.service";
-import { CompareHashes, HashText } from "@utils/hash.util";
-import { SanitizeUser } from "@utils/sanitize.util";
+import { SanitizeUser } from "@utils/sanitize.util.js";
+import HandleError from "@utils/handleError.util.js";
+import SendResponse from "@utils/sendResponse.util.js";
+import { CompareHashes } from "@utils/hash.util.js";
 
 
 

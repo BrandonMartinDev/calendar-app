@@ -6,8 +6,8 @@ import express from 'express';
 
 // Validators
 
-import { ValidateRequestBodyExists } from '@validators/request.validator';
-import { ValidateUserIsLoggedIn, ValidateUserIsLoggedOut } from '@validators/auth.validator';
+import { ValidateRequestBodyExists } from '@validators/request.validator.js';
+import { ValidateUserIsLoggedIn, ValidateUserIsLoggedOut } from '@validators/auth.validator.js';
 
 
 // Controllers
@@ -16,7 +16,7 @@ import {
     GetLoggedInUser,
     LoginUser,
     LogoutUser
-} from '@controllers/auth.controller';
+} from '@controllers/auth.controller.js';
 
 
 

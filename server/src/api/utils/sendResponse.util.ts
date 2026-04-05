@@ -9,7 +9,7 @@ import {
 
 // Utils
 
-import HandleError from '@utils/handleError.util';
+import HandleError from '@utils/handleError.util.js';
 
 
 

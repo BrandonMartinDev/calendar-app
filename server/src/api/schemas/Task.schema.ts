@@ -2,7 +2,7 @@
 
 // Types
 
-import { Task } from "@shared/types/main";
+import { Task } from "@shared/types/main.js";
 
 
 // Packages

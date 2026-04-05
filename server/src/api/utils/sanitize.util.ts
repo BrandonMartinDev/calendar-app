@@ -5,7 +5,7 @@
 import {
     type Task,
     type User
-} from "@shared/types/main";
+} from "@shared/types/main.js";
 
 
 // Packages
@@ -13,7 +13,7 @@ import { isValidObjectId } from "mongoose";
 
 
 // Utils
-import HandleError from "./handleError.util"
+import HandleError from "./handleError.util.js"
 
 
 

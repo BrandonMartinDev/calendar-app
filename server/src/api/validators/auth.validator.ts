@@ -11,8 +11,8 @@ import {
 
 // Utils
 
-import HandleError from "@utils/handleError.util";
-import SendResponse from "@utils/sendResponse.util";
+import HandleError from "@utils/handleError.util.js";
+import SendResponse from "@utils/sendResponse.util.js";
 
 
 

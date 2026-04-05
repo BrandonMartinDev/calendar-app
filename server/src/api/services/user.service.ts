@@ -1,7 +1,7 @@
 // -- == [[ IMPORTS ]] == -- \\
 
 // Shared
-import { User } from "@shared/types/main";
+import { User } from "@shared/types/main.js";
 
 
 // Packages
@@ -9,12 +9,12 @@ import mongoose from "mongoose";
 
 
 // Schemas
-import { UserModel } from "@schemas/User.schema";
+import { UserModel } from "@schemas/User.schema.js";
 
 
 // Utils
-import HandleError from "@utils/handleError.util"
-import { HashText } from "@utils/hash.util";
+import HandleError from "@utils/handleError.util.js"
+import { HashText } from "@utils/hash.util.js";
 
 
 

@@ -16,15 +16,15 @@ import express from 'express';
 
 // Utils
 
-import HandleError from '@utils/handleError.util';
-import SendResponse from "@utils/sendResponse.util";
+import HandleError from '@utils/handleError.util.js';
+import SendResponse from "@utils/sendResponse.util.js";
 
 
 // Routers
 
-import SignupRouter from "@routers/signup.router";
-import AuthRouter from "@routers/auth.router";
-import TaskRouter from "@routers/tasks.router";
+import SignupRouter from "@routers/signup.router.js";
+import AuthRouter from "@routers/auth.router.js";
+import TaskRouter from "@routers/tasks.router.js";
 
 
 

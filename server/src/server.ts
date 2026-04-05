@@ -19,7 +19,7 @@ import {
     CORS_OPTIONS,
     EXPRESS_SESSION_OPTIONS,
     PORT
-} from "@config/defaults.config";
+} from "@config/defaults.config.js";
 
 
 // Database
@@ -28,7 +28,7 @@ import {
     ConnectToDB,
     DatabaseStatus,
     DB_STATUS
-} from "@database/MongoDB.database";
+} from "@database/MongoDB.database.js";
 
 
 // Express/middlewares
@@ -38,13 +38,13 @@ import session from "express-session";
 
 
 // Routers
-import MainRouter from "@routers/main.router";
+import MainRouter from "@routers/main.router.js";
 
 
 // Utils
 
-import SendResponse from "@utils/sendResponse.util";
-import HandleError from "@utils/handleError.util";
+import SendResponse from "@utils/sendResponse.util.js";
+import HandleError from "@utils/handleError.util.js";
 
 
 

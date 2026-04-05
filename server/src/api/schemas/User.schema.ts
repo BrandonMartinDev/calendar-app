@@ -2,7 +2,7 @@
 
 // Types
 
-import { User } from "@shared/types/main";
+import { User } from "@shared/types/main.js";
 
 
 // Packages

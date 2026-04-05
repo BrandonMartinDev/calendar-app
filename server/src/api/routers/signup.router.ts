@@ -5,11 +5,11 @@ import express from 'express';
 
 
 // Validators
-import { ValidateUserIsLoggedOut } from '@validators/auth.validator';
+import { ValidateUserIsLoggedOut } from '@validators/auth.validator.js';
 
 
 // Controllers
-import { SignupUser } from '@controllers/signup.controller';
+import { SignupUser } from '@controllers/signup.controller.js';
 
 
 

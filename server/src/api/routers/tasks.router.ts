@@ -6,8 +6,8 @@ import express from "express";
 
 // Validators
 
-import { ValidateUserIsLoggedIn } from "@validators/auth.validator";
-import { ValidateRequestBodyExists } from "@validators/request.validator";
+import { ValidateUserIsLoggedIn } from "@validators/auth.validator.js";
+import { ValidateRequestBodyExists } from "@validators/request.validator.js";
 
 
 // Controllers
@@ -23,7 +23,7 @@ import {
     
     EditSpecificTaskController,
 
-} from "@controllers/tasks.controller";
+} from "@controllers/tasks.controller.js";
 
 
 

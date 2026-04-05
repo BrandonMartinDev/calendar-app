@@ -1,7 +1,7 @@
 // -- == [[ IMPORTS ]] == -- \\
 
 // Config
-import { BCRYPT_SALT_ROUNDS } from '@config/defaults.config';
+import { BCRYPT_SALT_ROUNDS } from '@config/defaults.config.js';
 
 
 // Packages
@@ -9,7 +9,7 @@ import bcrypt from 'bcrypt';
 
 
 // Utils
-import HandleError from "@utils/handleError.util"
+import HandleError from "@utils/handleError.util.js"
 
 
 

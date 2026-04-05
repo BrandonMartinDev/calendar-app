@@ -2,7 +2,7 @@
 
 // Types
 
-import { Task } from "@shared/types/main";
+import { Task } from "@shared/types/main.js";
 
 import {
     type Request,
@@ -13,15 +13,15 @@ import {
 
 // Utils
 
-import HandleError from "@utils/handleError.util";
-import SendResponse from "@utils/sendResponse.util";
-import { SanitizeTask, SanitizeTasks } from "@utils/sanitize.util";
+import HandleError from "@utils/handleError.util.js";
+import SendResponse from "@utils/sendResponse.util.js";
+import { SanitizeTask, SanitizeTasks } from "@utils/sanitize.util.js";
 
 
 // Services
 
-import { GetUserByID } from "@services/user.service";
-import { CreateNewUserTask, DeleteSpecificTask, GetSpecificTaskInfo } from "@services/tasks.service";
+import { GetUserByID } from "@services/user.service.js";
+import { CreateNewUserTask, DeleteSpecificTask, GetSpecificTaskInfo } from "@services/tasks.service.js";
 
 
 
