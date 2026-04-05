@@ -4,15 +4,16 @@
   "description": "",
   "license": "ISC",
   "author": "Brandon Martin",
-  "type": "commonjs",
-  "main": "dist/server",
+  "type": "module",
+  "main": "dist/server/src/server.js",
   "scripts": {
     "dev": "tsx watch src/server",
-    "build": "tsc && tsc-alias src/server",
-    "start": "node dist/server"
+    "build": "tsc && tsc-alias",
+    "start": "node dist/server/src/server.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
@@ -25,7 +26,7 @@
     "@types/express-session": "^1.18.2",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^25.0.10",
-    "cors": "^2.8.6",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }

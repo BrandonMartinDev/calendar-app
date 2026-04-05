@@ -8,9 +8,9 @@ services:
     restart: unless-stopped
     env_file: ./server/.env
     networks:
-      - calendar-network
+      - dev-calendar-network
     volumes:
-      - calendar-database:/data/db
+      - ./data:/data/db
 
 
   server:
@@ -20,7 +20,7 @@ services:
       context: ./server
       dockerfile: Dockerfile.dev
     networks:
-      - calendar-network
+      - dev-calendar-network
     ports:
       - 3000:3000
     volumes:
@@ -37,7 +37,7 @@ services:
       context: ./client
       dockerfile: Dockerfile.dev
     networks:
-      - calendar-network
+      - dev-calendar-network
     ports: 
       - 5173:5173
     volumes:
@@ -49,7 +49,7 @@ services:
 
 
 networks:
-  calendar-network:
+  dev-calendar-network:
     driver: bridge
 
 
