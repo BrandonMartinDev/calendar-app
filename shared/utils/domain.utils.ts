@@ -12,8 +12,6 @@ const getDomainFromOrigin = (origin: string) => {
 
 const isOriginLocal = (origin: string): boolean => {
 
-    console.log(origin);
-
     return origin.includes("localhost")
         || origin.includes("192.168")
         || origin.includes("172.16");
