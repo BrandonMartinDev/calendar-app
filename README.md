@@ -8,3 +8,6 @@ A simple application to track users' tasks locally using the MERN + Typescript s
 
 ### Docker:
 
+TODO: 
+
+create readme
