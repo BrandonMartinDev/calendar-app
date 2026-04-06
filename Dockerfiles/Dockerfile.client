@@ -1,0 +1,37 @@
+FROM node:25-alpine AS build
+
+# Set work directory to /client inside docker container
+WORKDIR /client
+
+
+# Copy package.json and package-lock into work dir
+COPY ../client/*.json /client/
+
+
+# Install dependencies in container using package json
+RUN npm ci
+
+
+# Once deps installed, copy src and shared into work dir
+COPY ../client /client/
+COPY ../shared /shared/
+
+
+# Build from source files
+RUN npm run build
+
+
+
+FROM nginx:stable-alpine AS final
+
+# Copy dist files and nginx.conf into proper dirs
+
+COPY --from=build /client/dist /usr/share/nginx/html
+COPY --from=build /client/nginx.conf /etc/nginx/
+
+
+# Start server
+
+EXPOSE 80
+
+CMD [ "nginx", "-g", "daemon off;" ]

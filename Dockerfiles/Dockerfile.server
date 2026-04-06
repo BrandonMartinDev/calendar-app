@@ -5,7 +5,7 @@ WORKDIR /server
 
 
 # Copy package.json and package-lock into work dir
-COPY server/*.json /server/
+COPY ../server/*.json /server/
 
 
 # Install dependencies in container using package json
@@ -13,8 +13,8 @@ RUN npm ci
 
 
 # Once deps installed, copy src and shared into work dir
-COPY server/src /server/src/
-COPY shared /shared/
+COPY ../server/src /server/src/
+COPY ../shared /shared/
 
 
 # Build from source files
@@ -42,8 +42,6 @@ RUN npm ci --omit=dev
 
 # Start server
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD [ "npm", "start" ]
-
-# TODO MAKE DOCKERFILE FOR CLIENT

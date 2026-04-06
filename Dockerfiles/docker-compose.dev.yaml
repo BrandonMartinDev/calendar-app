@@ -6,27 +6,27 @@ services:
   database:
     image: mongo
     restart: unless-stopped
-    env_file: ./server/.env
+    env_file: ../.env
     networks:
       - dev-calendar-network
     volumes:
-      - ./data:/data/db
+      - ../data:/data/db
 
 
   server:
     restart: unless-stopped
-    env_file: ./server/.env
+    env_file: ../.env
     build:
-      context: ./server
+      context: ../server
       dockerfile: Dockerfile.dev
     networks:
       - dev-calendar-network
     ports:
-      - 3000:3000
+      - 8080:8080
     volumes:
-      - ./server:/app
-      - ./server/node_modules:/app/node_modules
-      - ./shared:/shared
+      - ../server:/app
+      - ../server/node_modules:/app/node_modules
+      - ../shared:/shared
     depends_on:
       - database
 
@@ -34,16 +34,16 @@ services:
   client:
     restart: unless-stopped
     build:
-      context: ./client
+      context: ../client
       dockerfile: Dockerfile.dev
     networks:
       - dev-calendar-network
     ports: 
       - 5173:5173
     volumes:
-      - ./client:/app
-      - ./client/node_modules:/app/node_modules
-      - ./shared:/shared
+      - ../client:/app
+      - ../client/node_modules:/app/node_modules
+      - ../shared:/shared
     depends_on:
       - server
 
