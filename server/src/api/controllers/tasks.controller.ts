@@ -38,6 +38,8 @@ const RejectTaskAction = async (res: Response) => {
             }
         });
 
+        console.log("[TASK CONTROLLER] REJECTED TASK ACTION");
+
     } catch (error) {
         HandleError(res, { error: error });
     }
@@ -54,6 +56,8 @@ const RejectMissingTask = async (res: Response) => {
                 error: "Task info does not exist"
             }
         });
+
+        console.log("[TASK CONTROLLER] REJECTED TASK ACTION BECAUSE TASK INFO DID NOT EXIST");
 
     } catch (error) {
         HandleError(res, { error: error });
@@ -91,6 +95,8 @@ const GetUserTasksController = async (req: Request, res: Response, next: NextFun
                 data: sanitizedTasks
             }
         });
+
+        console.log("[TASK CONTROLLER] Got user's tasks:", _id);
 
     } catch (error) {
         HandleError(res, { error: error });
@@ -151,6 +157,8 @@ const GetSpecificTaskInfoController = async (req: Request, res: Response, next: 
                 data: sanitizedTask
             }
         });
+
+        console.log("[TASK CONTROLLER] Got task info:", task_id);
 
     } catch (error) {
         HandleError(res, { error: error });
@@ -217,6 +225,8 @@ const CreateNewTaskController = async (req: Request, res: Response, next: NextFu
             }
         });
 
+        console.log("[TASK CONTROLLER] Created new task info:", sanitizedTask._id);
+
     } catch (error) {
         HandleError(res, { error: error });
     }
@@ -279,6 +289,8 @@ const DeleteTaskController = async (req: Request, res: Response, next: NextFunct
                 message: `Successfully deleted task (${task_id.toString()})`
             }
         });
+
+        console.log("[TASK CONTROLLER] Deleted task info:", task_id);
 
     } catch (error) {
         HandleError(res, { error: error });
@@ -368,6 +380,8 @@ const EditSpecificTaskController = async (req: Request, res: Response, next: Nex
                 data: sanitizedTask
             }
         });
+
+        console.log("[TASK CONTROLLER] Edited task info:", task_id);
 
     } catch (error) {
         HandleError(res, { error: error });

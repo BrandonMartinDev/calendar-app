@@ -29,7 +29,7 @@ const SignupUser = async (req: Request, res: Response, next: NextFunction) => {
         // Makes sure username and password from request body exist
 
         const { username, password } = req.body;
-        
+
         if (!username || !password) {
 
             SendResponse(res, {
@@ -75,6 +75,8 @@ const SignupUser = async (req: Request, res: Response, next: NextFunction) => {
             }
 
         });
+
+        console.log("[SIGNUP CONTROLLER] Created new user:", newUser._id);
 
     } catch (error) {
         HandleError(res, { error: error });

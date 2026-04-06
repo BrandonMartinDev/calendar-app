@@ -28,6 +28,8 @@ const RejectAuth = async (res: Response) => {
 
     try {
 
+        console.log("[AUTH CONTROLLER] REJECTED AUTH");
+
         SendResponse(res, {
             statusCode: 401,
             responseJson: {
@@ -89,6 +91,8 @@ const LoginUser = async (req: Request, res: Response, next: NextFunction) => {
             }
         });
 
+        console.log("[AUTH CONTROLLER] Logged in user:", user._id);
+
     } catch (error) {
         HandleError(res, { error: error });
     }
@@ -109,6 +113,8 @@ const LogoutUser = async (req: Request, res: Response, next: NextFunction) => {
                 message: (`Successfully logged out user`)
             }
         });
+
+        console.log("[AUTH CONTROLLER] Logged out user");
 
     } catch (error) {
         HandleError(res, { error: error });
@@ -141,6 +147,8 @@ const GetLoggedInUser = async (req: Request, res: Response, next: NextFunction) 
                 data: sanitizedUser
             }
         });
+
+        console.log("[AUTH CONTROLLER] Got logged in user:", loggedInUserID);
 
     } catch (error) {
         HandleError(res, { error: error });

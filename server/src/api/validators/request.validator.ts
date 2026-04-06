@@ -39,6 +39,8 @@ const ValidateRequestBodyExists = (req: Request, res: Response, next: NextFuncti
 
         }
 
+        console.log("[VALIDATE] Validated request body exists");
+
         next();
 
     } catch (error) {

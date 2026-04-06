@@ -42,6 +42,8 @@ const ValidateUserIsLoggedIn = (req: Request, res: Response, next: NextFunction)
 
         }
 
+        console.log("[VALIDATE] Validated user is logged in:", loggedInUserID);
+
         next();
 
     } catch (error) {
@@ -73,6 +75,8 @@ const ValidateUserIsLoggedOut = (req: Request, res: Response, next: NextFunction
             return;
 
         }
+
+        console.log("[VALIDATE] Validated user is NOT logged in");
 
         next();
 
