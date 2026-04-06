@@ -15,7 +15,11 @@ import {
 
 // Shared
 
-import { BACKEND_URL } from "@shared/config/settings.config";
+import {
+    PROD_BACKEND_URL,
+    TEST_BACKEND_URL,
+    IS_PROD
+} from "@shared/config/settings.config";
 
 
 // Packages
@@ -34,7 +38,7 @@ import CalendarModalContextProvider from "./calendar-modal.context";
 
 // -- == [[ CONSTANTS ]] == -- \\
 
-const ENDPOINT_URL = (`${BACKEND_URL}/api/v1/tasks`);
+const ENDPOINT_URL = (`${IS_PROD ? PROD_BACKEND_URL : TEST_BACKEND_URL}/api/v1/tasks`);
 
 const DEFAULT_OPTIONS: RequestInit = {
 

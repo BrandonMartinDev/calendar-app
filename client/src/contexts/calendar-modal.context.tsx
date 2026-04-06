@@ -2,7 +2,11 @@
 
 // Config
 
-import { BACKEND_URL } from "@shared/config/settings.config";
+import {
+    PROD_BACKEND_URL,
+    TEST_BACKEND_URL,
+    IS_PROD
+} from "@shared/config/settings.config";
 
 
 // Types
@@ -37,7 +41,7 @@ import EditTaskModal from "@common/components/modal/modals/edit-task";
 
 // -- == [[ CONSTANTS ]] == -- \\
 
-const ENDPOINT_URL: string = (`${BACKEND_URL}/api/v1/tasks`);
+const ENDPOINT_URL: string = (`${IS_PROD ? PROD_BACKEND_URL : TEST_BACKEND_URL}/api/v1/tasks`);
 
 const OPTIONS: RequestInit = {
 

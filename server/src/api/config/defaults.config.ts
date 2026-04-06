@@ -14,34 +14,79 @@ import {
 // Shared
 
 import {
-    BACKEND_URL,
-    FRONTEND_URL
+    IS_PROD,
+    PROD_BACKEND_URL,
+    PROD_FRONTEND_URL,
+    TEST_BACKEND_URL,
+    TEST_FRONTEND_URL
 } from "@shared/config/settings.config.js";
+
+import {
+    getDomainFromOrigin,
+    isOriginLocal
+} from "@shared/utils/domain.utils.js";
 
 
 
 // -- == [[ GENERAL ]] == -- \\
 
-export const PORT: number = parseInt(process.env.PORT as string) || 3000;
+export const PORT: number = 8080;
 export const BCRYPT_SALT_ROUNDS: number = 10;
 
 
 
 // -- == [[ CORS ]] == -- \\
 
-export const CORS_WHITELIST = [BACKEND_URL, FRONTEND_URL, "http://localhost:5173"];
+export const CORS_WHITELIST = [PROD_BACKEND_URL, PROD_FRONTEND_URL, TEST_BACKEND_URL, TEST_FRONTEND_URL];
 
 export const CORS_OPTIONS: CorsOptions = {
 
     credentials: true,
     origin: (reqOrigin, callback) => {
 
-        if (!reqOrigin || CORS_WHITELIST.indexOf(reqOrigin) !== -1) {
-            callback(null, true)
-        } else {
-            const message = `Not allowed by CORS: '${reqOrigin}'\n\nAllowed Resources Below:\n\n-----\n${CORS_WHITELIST.join("\n")}\n-----\n\n`
-            callback(new Error(message))
+        // Get err message and check if origin exists
+
+        const errMessage = `Not allowed by CORS: '${reqOrigin}'\n\nAllowed Origins Below:\n\n-----\n${CORS_WHITELIST.join("\n")}\n-----\n\n`
+
+        if (!reqOrigin) {
+            return callback(null, true);
         }
+
+
+        // Check if origin is local
+
+        const isLocal = isOriginLocal(reqOrigin);
+
+        if (isLocal) {
+            return callback(null, true);
+        };
+
+
+        // Get domain from origin and loop through cors whitelist
+
+        const domain = getDomainFromOrigin(reqOrigin);
+
+        for (let i = 0; i < CORS_WHITELIST.length; i++) {
+
+            // get domain from current cors whitelist index
+
+            const whiteListedDomain = getDomainFromOrigin(CORS_WHITELIST[i]);
+
+
+            // Check if whitelisted domain is the same as origin's domain
+
+            if (whiteListedDomain === domain) {
+                return callback(null, true);
+            }
+
+        }
+
+        // Catch all rejection
+        
+        console.warn("BLOCKED DOMAIN:", reqOrigin);
+        
+        callback(new Error(errMessage));
+        
 
     },
 
@@ -71,6 +116,7 @@ export const EXPRESS_SESSION_OPTIONS: SessionOptions = {
     saveUninitialized: false,
 
     cookie: {
+        sameSite: IS_PROD,
         maxAge: (1000 * 60 * 60 * 24 * 30) // 30 Days = 1000ms * 60s * 60m * 24h * 30d
     }
 
