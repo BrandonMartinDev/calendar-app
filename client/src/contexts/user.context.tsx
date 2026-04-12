@@ -34,6 +34,7 @@ import {
 // -- == [[ CONSTANTS ]] == -- \\
 
 const ENDPOINT_URL = (`${IS_PROD ? PROD_BACKEND_URL : TEST_BACKEND_URL}/api/v1/auth`);
+const SIGNUP_ENDPOINT_URL = (`${IS_PROD ? PROD_BACKEND_URL : TEST_BACKEND_URL}/api/v1/signup`);
 
 const DEFAULT_OPTIONS: RequestInit = {
 
@@ -145,13 +146,15 @@ type UserContextType = {
     userContextState: UserStateType;
     userContextDispatch: React.ActionDispatch<[action: UserReducerAction]>;
     login: (username: string, password: string) => any;
+    signup: (username: string, password: string) => any;
 
 }
 
 export const UserContext = createContext<UserContextType>({
     userContextState: defaultUserState,
     userContextDispatch: () => { },
-    login: () => { }
+    login: () => { },
+    signup: () => { }
 });
 
 
@@ -285,9 +288,58 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
             const responseJSON = await response.json();
             if (!responseJSON) throw new Error("Could not parse JSON from response");
 
-            console.log(responseJSON.message);
+            console.log("LOGGED IN:", responseJSON.message);
 
             refreshCurrentUserInfo();
+
+        } catch (error) {
+            setUserToError();
+        }
+
+    }
+
+    const signup = async (username: string, password: string) => {
+
+        try {
+
+            // Sets user state to loading and sends login request to backend
+
+            setUserToLoading();
+
+            const reqBody = JSON.stringify({ username, password });
+            const options = { ...DEFAULT_OPTIONS, body: reqBody };
+
+            const response = await fetch(SIGNUP_ENDPOINT_URL, options);
+
+
+            // Checks if response is ok and parses json from response
+
+            if (!response.ok) {
+
+                switch (response.status) {
+                    case 401:
+                        setUserToError("Username or password is incorrect");
+                        break;
+                    case 403:
+                        setUserToError("You are not authorized to access this resource");
+                        break;
+                    case 429:
+                        setUserToError("You're sending too many responses too quickly");
+                        break;
+                    default:
+                        setUserToError();
+                }
+
+                return;
+
+            };
+
+            const responseJSON = await response.json();
+            if (!responseJSON) throw new Error("Could not parse JSON from response");
+
+            console.log("SIGNED UP:", responseJSON.message);
+
+            login(username, password);
 
         } catch (error) {
             setUserToError();
@@ -308,7 +360,8 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
             userContextState,
             userContextDispatch,
 
-            login
+            login,
+            signup
 
         }}>
             {children}

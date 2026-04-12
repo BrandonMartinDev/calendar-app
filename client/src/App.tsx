@@ -12,10 +12,16 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router"
 import {
 
   SignInPage,
+  SignUpPage,
   CalendarPage
 
 } from "@pages/index";
+
+
+// Contexts
+
 import { UserContextProvider } from "@contexts/user.context";
+
 
 
 
@@ -43,7 +49,7 @@ function App() {
 
           <Route path='auth'>
             <Route path="signin" element={<SignInPage />} />
-            {/* <Route path="/signup" element={<SignInPage />} /> */}
+            <Route path="signup" element={<SignUpPage />} />
           </Route>
 
           <Route path="/calendar" element={<CalendarPage />} />
