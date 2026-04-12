@@ -19,7 +19,7 @@ import {
     PROD_BACKEND_URL,
     TEST_BACKEND_URL,
     IS_PROD
-} from "@shared/config/settings.config";
+} from "@config/settings.config";
 
 
 // Packages

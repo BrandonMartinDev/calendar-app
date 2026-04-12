@@ -31,6 +31,9 @@
       "@shared/*": [
         "../shared/*"
       ],
+      "@config/*": [
+        "./src/config/*"
+      ],
       "@pages/*": [
         "./src/pages/*"
       ],

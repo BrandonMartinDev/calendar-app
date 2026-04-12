@@ -10,17 +10,6 @@ import {
     type SessionOptions
 } from "express-session";
 
-
-// Shared
-
-import {
-    IS_PROD,
-    PROD_BACKEND_URL,
-    PROD_FRONTEND_URL,
-    TEST_BACKEND_URL,
-    TEST_FRONTEND_URL
-} from "@shared/config/settings.config.js";
-
 import {
     getDomainFromOrigin,
     isOriginLocal
@@ -30,8 +19,14 @@ import {
 
 // -- == [[ GENERAL ]] == -- \\
 
-export const PORT: number = 8080;
+export const IS_PROD: boolean = ((process.env.VITE_IS_PROD as string) === "true") || true;
+export const PORT: number = parseInt(process.env.PORT as string) || 8080;
 export const BCRYPT_SALT_ROUNDS: number = 10;
+
+export const PROD_BACKEND_URL: string = (process.env.VITE_PROD_BACKEND_URL as string);
+export const PROD_FRONTEND_URL: string = (process.env.PROD_FRONTEND_URL as string);
+export const TEST_BACKEND_URL: string = (process.env.VITE_TEST_BACKEND_URL as string) || "http://localhost:8080";
+export const TEST_FRONTEND_URL: string = (process.env.TEST_FRONTEND_URL as string) || "http://localhost:5173";
 
 
 
@@ -82,9 +77,9 @@ export const CORS_OPTIONS: CorsOptions = {
         }
 
         // Catch all rejection
-        
+
         console.warn("BLOCKED DOMAIN:", reqOrigin);
-        
+
         callback(new Error(errMessage));
 
     },
