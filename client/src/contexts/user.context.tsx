@@ -146,6 +146,7 @@ type UserContextType = {
     userContextState: UserStateType;
     userContextDispatch: React.ActionDispatch<[action: UserReducerAction]>;
     login: (username: string, password: string) => any;
+    logout: () => any;
     signup: (username: string, password: string) => any;
 
 }
@@ -154,6 +155,7 @@ export const UserContext = createContext<UserContextType>({
     userContextState: defaultUserState,
     userContextDispatch: () => { },
     login: () => { },
+    logout: () => { },
     signup: () => { }
 });
 
@@ -298,11 +300,52 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
 
     }
 
+    const logout = async () => {
+
+        try {
+
+            // Sets user state to loading and sends logout request to backend
+
+            setUserToLoading();
+
+            const options = { ...DEFAULT_OPTIONS, method: "DELETE" };
+            const response = await fetch(ENDPOINT_URL, options);
+
+
+            // Checks if response is ok and parses json from response
+
+            if (!response.ok) {
+
+                switch (response.status) {
+                    case 429:
+                        setUserToError("You're sending too many responses too quickly");
+                        break;
+                    default:
+                        setUserToError();
+                }
+
+                return;
+
+            };
+
+            const responseJSON = await response.json();
+            if (!responseJSON) throw new Error("Could not parse JSON from response");
+
+            console.log("LOGGED OUT:", responseJSON.message);
+
+            refreshCurrentUserInfo();
+
+        } catch (error) {
+            setUserToError();
+        }
+
+    }
+
     const signup = async (username: string, password: string) => {
 
         try {
 
-            // Sets user state to loading and sends login request to backend
+            // Sets user state to loading and sends signup request to backend
 
             setUserToLoading();
 
@@ -317,8 +360,8 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
             if (!response.ok) {
 
                 switch (response.status) {
-                    case 401:
-                        setUserToError("Username or password is incorrect");
+                    case 400:
+                        setUserToError("User already exists");
                         break;
                     case 403:
                         setUserToError("You are not authorized to access this resource");
@@ -361,6 +404,7 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
             userContextDispatch,
 
             login,
+            logout,
             signup
 
         }}>
