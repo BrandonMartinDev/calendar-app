@@ -19,8 +19,9 @@ import { CalendarContextProvider } from '@contexts/calendar.context';
 
 // Components
 
-import CalendarTopbar from './components/topbar';
+import CalendarMonthPicker from './components/month-picker';
 import CalendarGrid from './components/calendar-grid';
+import CalendarTopbar from './components/topbar';
 
 
 
@@ -48,17 +49,13 @@ const CalendarPage = () => {
 
     }, [JSON.stringify(userContextState)]);
 
-    // TODO: 
-    // Create task modal context
-    // have a way to show/hide task modals
-    // have reducers that track each modal's form state
-    // have a way to submit each modal's form state to backend (creating, deleting, editing task)
-
     return (
         <CalendarContextProvider>
             <div className="page-wrapper calendar">
 
                 <CalendarTopbar />
+
+                <CalendarMonthPicker />
 
                 <CalendarGrid />
 

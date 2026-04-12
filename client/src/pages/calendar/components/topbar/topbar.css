@@ -1,115 +1,76 @@
-/* HEADER */
-
-.calendar header {
-
-    padding: 1rem 5rem;
-    background-color: rgba(0, 0, 0, .33);
-
-    min-height: 23rem;
-    width: 100%;
+header {
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: right;
 
-    position: relative;
+    gap: 1rem;
+
+    padding: .5rem 1rem;
+
+    background-color: var(--blue-500);
 
 }
 
 @media (max-width: 550px) {
-    .calendar header {
 
-        flex-direction: column-reverse;
-        align-content: center;
-        justify-content: center;
-
-        gap: 1rem;
-        padding: 1rem;
-
-        min-height: 15rem;
-
+    header {
+        align-items: center;
+        justify-content: space-between;
     }
-}
-
-.calendar header img {
-
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-
-    height: 100%;
-    width: 100%;
-
-    object-fit: cover;
-    z-index: -1;
 
 }
 
 
 
-/* TODAY BUTTON */
+header .loading .icon {
+    color: white;
+}
 
-.calendar header .today-button {
+
+
+header p {
 
     color: white;
-    background: none;
-    backdrop-filter: blur(5px);
 
-    border-radius: .25rem;
-    border: 1px solid white;
-
+    font-family: var(--ff-rubik);
     font-size: 1.6rem;
-    padding: .75rem 2rem;
-
-    transition: .15s all;
+    font-weight: 700;
 
 }
 
-.calendar header .today-button:hover {
-    color: white;
-    background-color: var(--blue-500);
-    border: 1px solid var(--blue-500);
-}
-
-.calendar header .today-button:active {
-    background-color: var(--blue-700);
-}
 
 
-
-/* MONTH DISPLAYER */
-
-.calendar header .month-displayer {
+header .logout {
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: .25rem;
+    gap: .25rem;
 
+    background-color: transparent;
     color: white;
+
+    font-family: var(--ff-rubik);
+    font-size: 1.6rem;
+    font-weight: 300;
 
 }
 
-.calendar header .month-displayer button {
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: none;
-    color: white;
-    outline: none;
-
-    transition: .15s color;
-
+header .logout:hover {
+    text-decoration: underline;
 }
 
-.calendar header .month-displayer button:hover {
-    color: var(--blue-500);
+header .logout:hover>.icon {
+    display: initial;
+}
+
+header .logout:hover>.icon-outline {
+    display: none;
+}
+
+
+header .logout .icon {
+    display: none;
 }
