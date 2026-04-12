@@ -17,6 +17,17 @@ COPY ../client /client/
 COPY ../shared /shared/
 
 
+# Inject client env variables so vite can build them
+
+ARG VITE_IS_PROD
+ARG VITE_PROD_BACKEND_URL
+ARG VITE_TEST_BACKEND_URL
+
+ENV VITE_IS_PROD=${VITE_IS_PROD}
+ENV VITE_PROD_BACKEND_URL=${VITE_PROD_BACKEND_URL}
+ENV VITE_TEST_BACKEND_URL=${VITE_TEST_BACKEND_URL}
+
+
 # Build from source files
 RUN npm run build
 
