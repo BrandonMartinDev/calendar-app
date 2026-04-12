@@ -27,6 +27,41 @@
 
 
 
+/* LOADING AND ERROR */
+
+.signup main .loading-message {
+
+    margin-top: 3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 2rem;
+
+}
+
+.signup main .error {
+
+    padding: .5rem 0;
+    border-radius: .33rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: .5rem;
+
+    color: white;
+    background-color: var(--red-500);
+
+    font-size: 1rem;
+    font-weight: 400;
+
+}
+
+
+
 
 
 /* FORM */

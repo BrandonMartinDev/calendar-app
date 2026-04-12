@@ -16,8 +16,53 @@ import { Link, useNavigate } from "react-router";
 import { UserContext } from "@contexts/user.context";
 
 
+// Icons
+
+import { FaInfoCircle } from "react-icons/fa";
+
+
+// Components
+
+import LoadingIcon from "@common/components/loading-icon";
+
+
 
 // -- == [[ COMPONENTS ]] == -- \\
+
+const Loading = () => {
+
+    return (
+        <div className="page-wrapper signup">
+            <main>
+
+                <h2>Plan-It</h2>
+                <h4>Sign Up</h4>
+
+                <div className="loading-message">
+                    <p>Signing Up...</p>
+                    <LoadingIcon />
+                </div>
+
+            </main>
+        </div>
+    )
+
+}
+
+type ErrorComponentProps = {
+    errMsg: string
+}
+
+const Error = ({ errMsg }: ErrorComponentProps) => {
+
+    return (
+        <div className="error">
+            <FaInfoCircle />
+            <p>{errMsg}</p>
+        </div>
+    )
+
+}
 
 const SignUpPage = () => {
 
@@ -36,8 +81,19 @@ const SignUpPage = () => {
 
     const {
         userContextState,
+        userContextDispatch,
         signup
     } = useContext(UserContext);
+
+
+    // Form inputs onchange method
+
+    const onFormChange = () => {
+        userContextDispatch({
+            type: "ERROR_UPDATE",
+            payload: false
+        });
+    }
 
 
     // Form submit method
@@ -60,6 +116,18 @@ const SignUpPage = () => {
 
     }, [JSON.stringify(userContextState)]);
 
+
+    // useEffect that runs whenever user navigates to signup screen
+
+    useEffect(() => {
+        userContextDispatch({
+            type: "ERROR_UPDATE",
+            payload: false
+        });
+    }, []);
+
+    if (userContextState.loading) return <Loading />;
+
     return (
         <div className="page-wrapper signup">
             <main>
@@ -71,6 +139,8 @@ const SignUpPage = () => {
 
                     <div className="inputs">
 
+                        {userContextState.error !== false && <Error errMsg={userContextState.error} />}
+
                         <div className="input-box">
 
                             <label htmlFor="username">New Username</label>
@@ -81,6 +151,7 @@ const SignUpPage = () => {
                                 name="username"
                                 value={formUser}
                                 onChange={(e) => {
+                                    onFormChange();
                                     setFormUser(e.target.value);
                                 }}
                             />
@@ -97,6 +168,7 @@ const SignUpPage = () => {
                                 name="password"
                                 value={formPass}
                                 onChange={(e) => {
+                                    onFormChange();
                                     setFormPass(e.target.value);
                                 }}
                             />
