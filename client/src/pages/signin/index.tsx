@@ -65,6 +65,7 @@ const SignInPage = () => {
             <main>
 
                 <h2>Plan-It</h2>
+                <h4>Log In</h4>
 
                 <form className="auth-wrapper">
 
@@ -110,7 +111,7 @@ const SignInPage = () => {
                         <button
                             type="submit"
                             onClick={onFormSubmit}
-                        >Sign In</button>
+                        >Log in</button>
 
                     </div>
 

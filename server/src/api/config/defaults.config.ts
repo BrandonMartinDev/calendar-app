@@ -86,7 +86,6 @@ export const CORS_OPTIONS: CorsOptions = {
         console.warn("BLOCKED DOMAIN:", reqOrigin);
         
         callback(new Error(errMessage));
-        
 
     },
 

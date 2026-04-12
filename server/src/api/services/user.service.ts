@@ -30,15 +30,15 @@ const GetUserByUsername = async (username: string, populateTasks: boolean = fals
 
         if (!username) throw new Error("Username was not provided");
 
-
+        
         // Find user in database and return it
 
         let user: User | null;
 
         if (populateTasks === true) {
-            user = await UserModel.findOne().where("username").equals(username).populate("created_tasks");
+            user = await UserModel.findOne().where("username").equals(username.toLowerCase()).populate("created_tasks");
         } else {
-            user = await UserModel.findOne().where("username").equals(username);
+            user = await UserModel.findOne().where("username").equals(username.toLowerCase());
         }
 
         return user;
@@ -98,7 +98,7 @@ const CreateNewUser = async (username: string, plaintextPassword: string) => {
         // Create new user with username and hashed password
 
         const newUser = await UserModel.create({
-            username: username,
+            username: username.toLowerCase(),
             password: hashedPassword
         });
 
