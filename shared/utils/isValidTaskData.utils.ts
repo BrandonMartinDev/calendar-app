@@ -2,7 +2,7 @@
 
 // Types
 
-import type { Task } from "@shared/types/main";
+import type { Task } from "..//types/main";
 
 
 

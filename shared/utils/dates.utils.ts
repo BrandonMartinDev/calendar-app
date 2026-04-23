@@ -9,7 +9,7 @@ import type {
     DayNumber,
     MonthNumber,
     Task
-} from "@shared/types/main";
+} from "../types/main";
 
 
 
