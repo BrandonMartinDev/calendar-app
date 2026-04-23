@@ -3,5 +3,3 @@ node_modules
 dist
 *.xcf
 data
-
-build-dockerfiles-prod.sh
