@@ -1,14 +1,20 @@
 #!/bin/bash
 
+TEST_BACKEND_URL="http://localhost:8080"        # Please change this from the default
+
+
+
+###### Don't need to change anything under this line ######
+
 if [ -z $1 ]; then
     echo ""
-    echo "Please provide a tag! Example Usage: 'build-dockerfiles-dev.sh <string>'"
+    echo "Please provide a tag! Example Usage: 'build-dockerfiles-dev.sh <string:tag>'"
     echo ""
     exit;
 fi
 
 clear;
-echo "Building server | 'calendar-server:$1'";
+echo "Building server for DEV | 'calendar-server:$1'";
 echo "";
 
 
@@ -26,15 +32,14 @@ echo "";
 
 
 echo""
-echo "Building client | 'calendar-client:$1'";
+echo "Building client for DEV | 'calendar-client:$1'";
 echo""
 
 sleep 2s;
 
 docker build -f ./Dockerfile.client \
---build-arg VITE_IS_PROD=true \
---build-arg VITE_PROD_BACKEND_URL=http://localhost:8080 \
---build-arg PROD_FRONTEND_URL=http://localhost:80 \
+--build-arg VITE_IS_PROD=false \
+--build-arg VITE_TEST_BACKEND_URL=$TEST_BACKEND_URL \
 -t calendar-client:$1 ../
 
 echo ""
