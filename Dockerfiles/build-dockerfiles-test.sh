@@ -8,13 +8,13 @@ TEST_BACKEND_URL="http://localhost:8080"        # Please change this from the de
 
 if [ -z $1 ]; then
     echo ""
-    echo "Please provide a tag! Example Usage: 'build-dockerfiles-dev.sh <string:tag>'"
+    echo "Please provide a tag! Example Usage: 'build-dockerfiles-test.sh <string:tag>'"
     echo ""
     exit;
 fi
 
 clear;
-echo "Building server for DEV | 'calendar-server:$1'";
+echo "Building server for TEST | 'calendar-server-test:$1'";
 echo "";
 
 
@@ -25,14 +25,14 @@ for i in {1..3}; do
     sleep 1s
 done;
 
-docker build -f ./Dockerfile.server -t calendar-server:$1 ../
+docker build -f ./Dockerfile.server -t calendar-server-test:$1 ../
 
 echo "";
 
 
 
 echo""
-echo "Building client for DEV | 'calendar-client:$1'";
+echo "Building client for TEST | 'calendar-client-test:$1'";
 echo""
 
 sleep 2s;
@@ -40,6 +40,6 @@ sleep 2s;
 docker build -f ./Dockerfile.client \
 --build-arg VITE_IS_PROD=false \
 --build-arg VITE_TEST_BACKEND_URL=$TEST_BACKEND_URL \
--t calendar-client:$1 ../
+-t calendar-client-test:$1 ../
 
 echo ""
